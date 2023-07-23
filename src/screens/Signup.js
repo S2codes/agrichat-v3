@@ -80,7 +80,7 @@ const Signup = ({ navigation, route }) => {
 
   // dropdown 
   const [isClicked, setIsClicked] = useState(false)
-  const [selectState, setSelectState] = useState("Select Your State")
+  const [selectState, setSelectState] = useState("Select Your State / UT")
 
   const [isDistrictClicked, setIsDistrictClicked] = useState(false)
   const [selectDistrict, setSelectDistrict] = useState("Select Your District")
@@ -125,7 +125,7 @@ const Signup = ({ navigation, route }) => {
 
 
     if (userStateId === "") {
-      showError("Please select your state")
+      showError("Please select your state / Ut")
       return
     }
     if (userDistrictId === "") {
@@ -258,7 +258,7 @@ const Signup = ({ navigation, route }) => {
 
               {/* =========State dropdown=========  */}
               <View style={styles.inputGroup}>
-                <Text style={styles.label}>State</Text>
+                <Text style={styles.label}>State UT</Text>
                 <TouchableOpacity style={styles.dropdown} onPress={() => {
                   setIsClicked(!isClicked)
                   setIsDistrictClicked(false)

@@ -9,7 +9,7 @@ import GroupItem from '../components/GroupItem'
 import { showError, showSuccess } from '../Utils/HelpFunctions'
 import CheckConnection from '../Utils/CheckConnection'
 import { RFValue } from "react-native-responsive-fontsize";
-const GroupSetting = ({navigation}) => {
+const GroupSetting = ({ navigation }) => {
 
     const windowHeight = Dimensions.get('window').height;
 
@@ -125,23 +125,18 @@ const GroupSetting = ({navigation}) => {
     }
 
     const onUpdate = async () => {
-        console.log("on update");
+
         try {
             const userSelectedGroup = JSON.stringify(selectedGroup)
             const userPinnedGroup = JSON.stringify(pinnedGroup)
-
-                const result = await apiPost(UPDATEGROUPS, { userid: userId, groupsid: userSelectedGroup, favoriteGroupsId: userPinnedGroup })
-                console.log(result);
-                if (result.response) {
-                    console.log("here");
-                    showSuccess("Your Groups are Updated");
-                    navigation.goBack()
-                } else {
-                    showError("Something went wrong")
+            const result = await apiPost(UPDATEGROUPS, { userid: userId, groupsid: userSelectedGroup, favoriteGroupsId: userPinnedGroup })
+            if (result.response) {
+                navigation.goBack()
+            } else {
+                showError("Something went wrong")
             }
 
         } catch (error) {
-            console.log(error);
             showError("Internal Server Error")
         }
 
@@ -152,8 +147,9 @@ const GroupSetting = ({navigation}) => {
 
     const handelScroll = (event) => {
         const { layoutMeasurement, contentOffset, contentSize } = event.nativeEvent;
-        const isEndReached = layoutMeasurement.height + contentOffset.y + 50 >= contentSize.height;
+        const isEndReached = Math.floor(layoutMeasurement.height + contentOffset.y) >= Math.floor(contentSize.height);
         if (isEndReached && !isFetching) {
+            setIsFetching(true)
             fetchData();
         }
     }
@@ -213,16 +209,15 @@ const GroupSetting = ({navigation}) => {
 
                     {
                         isFetching && (
-                            <View>
-                                <View style={{ paddingVertical: 20 }}>
-                                    <ActivityIndicator size="large" />
-                                </View>
+                            <View style={{ paddingVertical: 20 }}>
+                                <ActivityIndicator size="large" />
                             </View>
                         )
                     }
 
-                    {/* 
-                <View style={styles.gap}></View> */}
+                    <View style={styles.gap}>
+                        <Text style={{ textAlign: "center", alignSelf: "center" }}>Loading</Text>
+                    </View>
 
                 </ScrollView>
 
@@ -270,7 +265,7 @@ const styles = StyleSheet.create({
         color: "#000"
     },
     gap: {
-        height: 80
+        height: 90
     },
 
 

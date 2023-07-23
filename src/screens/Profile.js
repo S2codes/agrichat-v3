@@ -30,7 +30,7 @@ const Profile = ({ navigation }) => {
         setIsLoading(true)
 
       } catch (error) {
-        console.log("Internal Server Error");
+        showError("Something Went Wrong")
 
       }
     }
@@ -43,10 +43,7 @@ const Profile = ({ navigation }) => {
     try {
       await removeItem("authDetails")
       dispatch(loggedIN(false))
-      console.log("logout");
     } catch (error) {
-      console.log("logout error");
-      console.log(error);
       showError("Internal Server Error")
     }
   }

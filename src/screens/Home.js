@@ -1,4 +1,4 @@
-import { View, StyleSheet, TouchableOpacity, Text, FlatList, Image, Dimensions } from 'react-native'
+import { View, StyleSheet, TouchableOpacity, Text, } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import Appbar from '../components/Ui/Appbar'
 import { FontAwesome } from '@expo/vector-icons';
@@ -6,34 +6,11 @@ import CheckConnection from '../Utils/CheckConnection';
 import { apiGet, getItem } from '../Utils/Utils';
 import { showError } from '../Utils/HelpFunctions';
 import { FETCHSLIDERIMG, FETCHUSERDETAILS } from '../config/urls';
-import * as openAnything from "react-native-openanything"
 import { RFValue } from "react-native-responsive-fontsize";
-
-const banner = [
-
-  {
-    "id": "1",
-    "img": require("../../assets/banner/b1.png")
-  },
-  {
-    "id": "2",
-    "img": require("../../assets/banner/b2.png")
-  },
-  {
-    "id": "3",
-    "img": require("../../assets/banner/b3.png")
-  },
-  {
-    "id": "4",
-    "img": require("../../assets/banner/b4.png")
-  },
-
-]
+import ImgSlider from '../components/Ui/ImgSlider';
 
 
 const Home = ({ navigation }) => {
-
-  const { height, width } = Dimensions.get("window")
 
   const [isConnected, setIsConnected] = useState(true);
 
@@ -44,7 +21,6 @@ const Home = ({ navigation }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-
         const userData = await getItem("authDetails")
         const USERID = userData.userid
 
@@ -52,19 +28,16 @@ const Home = ({ navigation }) => {
         const data = await apiGet(endpoint)
 
         const userStateId = data.data.stateid
-        // console.log(userStateId);
 
         const slider1EndPoint = `${FETCHSLIDERIMG}&bannerid=1&state=${userStateId}`
         const slider1 = await apiGet(slider1EndPoint)
-        
-        setBanner1(slider1.data)
+
+        setBanner1(slider1)
         const slider2EndPoint = `${FETCHSLIDERIMG}&bannerid=2&state=${userStateId}`
         const slider2 = await apiGet(slider2EndPoint)
-        setBanner2(slider2.data)
-        console.log(slider2.data);
+        setBanner2(slider2)
 
         // setAppUserId(USERID)
-        // await getQuestion(USERID)
         // setIsLoading(true)
 
       } catch (error) {
@@ -88,60 +61,18 @@ const Home = ({ navigation }) => {
         <View style={{ display: "flex", justifyContent: "center" }}>
 
           {
-            banner1 && (
-              < View style={{ height: height / 3, marginBottom: 30 }}>
-                <FlatList horizontal
-                  data={banner1}
-                  pagingEnabled
-                  showsHorizontalScrollIndicator={false}
-                  keyExtractor={(key) => {
-                    return key.id
-                  }}
-                  renderItem={(elem) => {
-                    return <TouchableOpacity onPress={() => {
-                      openAnything.Web(elem.item.link)
-                    }}>
-                      <Image resizeMode='cover' source={{ uri: elem.item.img }} style={{ width: width, height: "100%" }} />
-                    </TouchableOpacity>
-                  }}
-                  style={styles.bannerList}
-                >
-                </FlatList>
-
+            banner1 && banner1.data && (
+              <View style={styles.banner}>
+                <ImgSlider data={banner1.data} />
               </View>
-
             )
           }
 
           {
-            banner2 && (
-
-              < View style={{ height: height / 3 }}>
-                
-                <FlatList horizontal
-                  data={banner2}
-                  pagingEnabled
-                  showsHorizontalScrollIndicator={false}
-                  keyExtractor={(key) => {
-                    return key.id
-                  }}
-                  renderItem={(elem) => {
-                    return <TouchableOpacity onPress={() => {
-                      openAnything.Web(elem.item.link)
-                    }}>
-                      <Image resizeMode='contain' source={{ uri: elem.item.img }} style={{ width: width, height: "100%" }} />
-                    </TouchableOpacity>
-                  }}
-
-                  style={styles.bannerList}
-
-                >
-                </FlatList>
-
+            banner2 && banner2.data && (
+              <View style={styles.banner}>
+                <ImgSlider data={banner2.data} />
               </View>
-
-
-
             )
           }
         </View>
@@ -183,7 +114,8 @@ const styles = StyleSheet.create({
   },
 
   banner: {
-    // height: "100%"
+    height: 200,
+    marginBottom: 30,
   },
 
   mainContainer: {

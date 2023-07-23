@@ -67,21 +67,16 @@ const SignIn = ({ navigation }) => {
 
   const isValidData = () => {
 
-    console.log(selectUserType);
 
     if (selectUserType !== "farmer") {
-      console.log("here");
-      console.log(email);
       var error = validation({
         email
       })
     } else {
-      console.log("here 2");
       error = validation({
         contact: email
       })
     }
-
 
     if (error) {
       showError(error)

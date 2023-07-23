@@ -1,11 +1,10 @@
-import { ScrollView, StyleSheet, Text, View } from 'react-native'
+import { ScrollView, StyleSheet, Text,View, Linking } from 'react-native'
 import React from 'react'
 import { TouchableOpacity } from 'react-native'
 import { Feather } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 import { Zocial } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
-import * as openAnything from "react-native-openanything"
 import { RFValue } from "react-native-responsive-fontsize";
 
 const ContactUs = () => {
@@ -18,7 +17,7 @@ const ContactUs = () => {
                 <View style={styles.iconBox}>
 
                     <TouchableOpacity style={styles.item} onPress={() =>{
-                        openAnything.Call("+919437130930")
+                        Linking.openURL('tel:+919437130930')
                     }}>
                         <View style={styles.containerRound}>
                             <Feather name="phone-call" size={35} color="#fff" />
@@ -27,7 +26,7 @@ const ContactUs = () => {
                     </TouchableOpacity>
 
                     <TouchableOpacity style={styles.item} onPress={() => {
-                        openAnything.Text("+919437130930")
+                        Linking.openURL('sms:+919437130930')
                     }}>
                         <View style={styles.containerRound}>
                             <Feather name="message-circle" size={35} color="#fff" />
@@ -36,7 +35,7 @@ const ContactUs = () => {
                     </TouchableOpacity>
 
                     <TouchableOpacity style={styles.item} onPress={() => {
-                        openAnything.Email("agrichatapp@gmail.com")
+                        Linking.openURL('mailto:agrichatapp@gmail.com')
                     }}>
                         <View style={styles.containerRound}>
                         <Zocial name="email" size={35} color="#fff" />
@@ -45,7 +44,7 @@ const ContactUs = () => {
                     </TouchableOpacity>
 
                     <TouchableOpacity style={styles.item}  onPress={() =>{
-                        openAnything.Web("https://chat.whatsapp.com/IAU77o4soshBLzrTZAOK4b")
+                        Linking.openURL('https://chat.whatsapp.com/IAU77o4soshBLzrTZAOK4b')
                     }} >
                         <View style={styles.containerRound}>
                         <FontAwesome name="whatsapp" size={35} color="#fff" />
@@ -59,7 +58,7 @@ const ContactUs = () => {
                 <View style={styles.iconBox}>
 
                     <TouchableOpacity style={styles.item} onPress={() => {
-                        openAnything.Youtube("http://www.youtube.com/c/agrimach")
+                        Linking.openURL('http://www.youtube.com/c/agrimach')
                     }} >
                         <View style={styles.containerRound}>
                         <AntDesign name="youtube" size={35} color="#fff" />
@@ -68,7 +67,7 @@ const ContactUs = () => {
                     </TouchableOpacity>
 
                     <TouchableOpacity style={styles.item} onPress={() => {
-                        openAnything.Web("https://www.facebook.com/AgriMachineIndia/")
+                        Linking.openURL('https://www.facebook.com/AgriMachineIndia/')
                     }}>
                         <View style={styles.containerRound}>
                         <AntDesign name="facebook-square" size={35} color="#fff" />
