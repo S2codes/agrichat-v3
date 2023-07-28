@@ -1,7 +1,6 @@
-import { Image, StyleSheet, Text, View, TouchableOpacity, Alert } from 'react-native'
+import { Image, StyleSheet, Text, View, TouchableOpacity, Alert, Linking } from 'react-native'
 import React from 'react'
 import { AntDesign } from '@expo/vector-icons';
-import * as openAnything from "react-native-openanything"
 import { useNavigation } from '@react-navigation/native';
 import { RFValue } from "react-native-responsive-fontsize";
 const MessageCard = ({ sendView = false, userView = true, deleteBtn = false, data, onDelete }) => {
@@ -81,7 +80,7 @@ const MessageCard = ({ sendView = false, userView = true, deleteBtn = false, dat
             {
                 data && data.attachment && data.attachment.type === "pdf" ? (
                     <TouchableOpacity style={styles.viewDocument} onPress={() => {
-                        openAnything.Pdf(data.attachment.attachment)
+                        Linking.openURL(data.attachment.attachment)
                     }}>
                         <AntDesign name="pdffile1" size={30} color="red" />
                         <Text style={styles.attachmentLabel}>View Doucment</Text>

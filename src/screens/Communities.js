@@ -91,6 +91,7 @@ const Communities = ({ navigation }) => {
 
               navigation.navigate("Community", {
                 Communityname: defaultGroup.type,
+                Communitycategory: "My Group",
                 GroupId: 1,
                 type: defaultGroup.type
               })
@@ -104,6 +105,7 @@ const Communities = ({ navigation }) => {
             <TouchableOpacity style={styles.groupItem} onPress={() => {
               navigation.navigate("Community", {
                 Communityname: defaultGroup.state,
+                Communitycategory: "My State",
                 GroupId: defaultGroup.stateid,
                 type: "state"
               })
@@ -115,6 +117,7 @@ const Communities = ({ navigation }) => {
             <TouchableOpacity style={styles.groupItem} onPress={() => {
               navigation.navigate("Community", {
                 Communityname: defaultGroup.district,
+                Communitycategory: "My Disrict",
                 GroupId: defaultGroup.districtid,
                 type: "district"
               })
@@ -126,6 +129,7 @@ const Communities = ({ navigation }) => {
             <TouchableOpacity style={styles.groupItem} onPress={() => {
               navigation.navigate("Community", {
                 Communityname: defaultGroup.block,
+                Communitycategory: "My Block",
                 GroupId: defaultGroup.blockid,
                 type: "block"
               })

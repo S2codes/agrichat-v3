@@ -26,15 +26,15 @@ const Home = ({ navigation }) => {
 
         const endpoint = `${FETCHUSERDETAILS}&userid=${USERID}`;
         const data = await apiGet(endpoint)
-
         const userStateId = data.data.stateid
 
         const slider1EndPoint = `${FETCHSLIDERIMG}&bannerid=1&state=${userStateId}`
         const slider1 = await apiGet(slider1EndPoint)
-
         setBanner1(slider1)
+
         const slider2EndPoint = `${FETCHSLIDERIMG}&bannerid=2&state=${userStateId}`
         const slider2 = await apiGet(slider2EndPoint)
+        console.log(slider2);
         setBanner2(slider2)
 
         // setAppUserId(USERID)

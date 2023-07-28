@@ -58,12 +58,9 @@ const Community = ({ navigation, route }) => {
 
 
   const deleteQusetion = async (id) => {
-
-
     const appUserStateid = user.stateid;
     const fromData = new FormData()
     fromData.append("questionid", id)
-
     try {
       await apiPostWithFromData(DELETEQUESTION, fromData);
       showSuccess("Question deleted")
@@ -74,7 +71,6 @@ const Community = ({ navigation, route }) => {
     }
 
   }
-
 
 
   const fetchQueries = () => {

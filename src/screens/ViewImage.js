@@ -71,8 +71,8 @@ const ViewImage = ({ navigation, route }) => {
                 </View>
 
                 <TouchableOpacity onPress={() => {
-                    // navigation.goBack()
-                    handelDownload(imageURL)
+                    navigation.goBack()
+                    // handelDownload(imageURL)
                 }}>
                     <Image source={{ uri: imageURL }} resizeMode='contain' style={[styles.imageFull, { height: windowHeight - 50 }]} />
                 </TouchableOpacity>

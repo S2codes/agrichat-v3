@@ -1,4 +1,4 @@
-import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { ScrollView, StyleSheet, Text, TouchableOpacity, View, Linking } from 'react-native'
 import ReplyCard from '../components/ReplyCard';
 import React, { useEffect, useState } from 'react';
 import { useIsFocused } from '@react-navigation/native';
@@ -7,7 +7,6 @@ import { GETQUESTIONBYID } from '../config/urls';
 import { Entypo } from '@expo/vector-icons';
 import { ActivityIndicator } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
-import * as openAnything from "react-native-openanything"
 import CheckConnection from '../Utils/CheckConnection';
 import { showError } from '../Utils/HelpFunctions';
 import { RFValue } from "react-native-responsive-fontsize";
@@ -103,26 +102,11 @@ const Replies = ({ navigation, route }) => {
                                 <View style={styles.cardContent}>
                                     <Text style={styles.para}>{questionDetails.question.question} </Text>
 
-                                    {/* {
-                                    questionDetails && questionDetails.question && questionDetails.question.attachment.type === 'jpg' ? (
-                                        // <TouchableOpacity onPress={() => {
-                                        //     navigation.navigate("View Image", {
-                                        //         imageURL: questionDetails.question.attachment.attachment
-                                        //     })
-                                        // }}>
-
-                                            <Image resizeMode="cover" style={styles.attachtFile} source={{ uri: questionDetails.question.attachment.attachment }} />
-
-                                        // </TouchableOpacity>
-
-                                    ) : (null)
-                                } */}
-
                                     {
                                         questionDetails && questionDetails.question && questionDetails.question.attachment.type === 'pdf' ? (
 
                                             <TouchableOpacity style={styles.viewDocument} onPress={() => {
-                                                openAnything.Pdf(questionDetails.question.attachment.attachment)
+                                                Linking.openURL(questionDetails.question.attachment.attachment)
                                             }}>
                                                 <AntDesign name="pdffile1" size={30} color="red" />
                                                 <Text style={styles.attachmentLabel}>View Doucment</Text>

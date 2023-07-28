@@ -6,7 +6,7 @@ const CommunityCard = (props) => {
 
     const navigation = useNavigation()
     const item = props.data
-
+    
     const getCommunityBg = (groupcatg) => {
 
         switch (groupcatg) {
@@ -53,7 +53,6 @@ const CommunityCard = (props) => {
 
     }
 
-
     return (
         <TouchableOpacity
             style={[styles.communityCardStyle,
@@ -62,6 +61,7 @@ const CommunityCard = (props) => {
                 () => {
                     navigation.navigate("Community", {
                         Communityname: item.groupName,
+                        Communitycategory: item.groupCategory,
                         GroupId: item.id,
                         type: "chat"
                     })

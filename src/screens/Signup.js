@@ -258,7 +258,7 @@ const Signup = ({ navigation, route }) => {
 
               {/* =========State dropdown=========  */}
               <View style={styles.inputGroup}>
-                <Text style={styles.label}>State UT</Text>
+                <Text style={styles.label}>State / UT</Text>
                 <TouchableOpacity style={styles.dropdown} onPress={() => {
                   setIsClicked(!isClicked)
                   setIsDistrictClicked(false)

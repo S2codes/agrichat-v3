@@ -161,8 +161,6 @@ const ChatGroups = ({ navigation }) => {
                     color='#5D9C59'
                     tintColor='#fff'
                     style={{ paddingTop: 5 }}
-
-
                     trailing={props => (
                         <HStack>
                             <Text style={styles.selectCount}>Selected ({selectGroups.length})</Text>

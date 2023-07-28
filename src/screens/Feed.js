@@ -63,9 +63,9 @@ const Feed = ({ navigation }) => {
   }
 
 
-
   const fetchQueries = () => {
     if (allQuestion) {
+      console.log(allQuestion);
       return allQuestion.map(item => (
         <QueryCard key={item.id} community={true} communityName={item.groupname} showUserName={false} data={item}
           onDelete={(id) => deleteQusetion(id)} />
@@ -97,26 +97,6 @@ const Feed = ({ navigation }) => {
         </View>
 
       </ScrollView>
-
-      {/* <View style={styles.btnGroup}>
-
-                <TouchableOpacity
-                    disabled={true}
-                    style={styles.btnItem2}
-                    onPress={() => {
-                        navigation.navigate("Chats")
-                    }}>
-                    <Text style={styles.btnText}>Chats</Text>
-                </TouchableOpacity>
-
-                <TouchableOpacity style={styles.btnItem} onPress={() => {
-                    navigation.navigate("Messages")
-                }}>
-                    <Text style={styles.btnText}>Messaging</Text>
-                </TouchableOpacity>
-
-            </View> */}
-
 
     </SafeAreaView>
     </>

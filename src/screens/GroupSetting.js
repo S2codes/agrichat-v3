@@ -20,17 +20,22 @@ const GroupSetting = ({ navigation }) => {
     const [userId, setUserId] = useState()
     const [page, setPage] = useState(1)
     const [isFetching, setIsFetching] = useState(false)
+    const [isNoData, setIsNoData] = useState(false)
 
     const fetchData = async () => {
         try {
             const response = await apiGet(`${SAVEDGROUPS}&userid=${userId}&page=${page}`)
+            setIsLoading(false)
             if (response.response) {
                 setResponseData([...responseData, ...response.data])
                 setPage(page + 1);
-                setIsLoading(false)
             } else {
                 setIsFetching(false)
+                if (response.message === "No record Found") {
+                    setIsNoData(true)
+                }
             }
+
         } catch (error) {
             showError("Internal Server Error")
         } finally {
@@ -131,6 +136,7 @@ const GroupSetting = ({ navigation }) => {
             const userPinnedGroup = JSON.stringify(pinnedGroup)
             const result = await apiPost(UPDATEGROUPS, { userid: userId, groupsid: userSelectedGroup, favoriteGroupsId: userPinnedGroup })
             if (result.response) {
+                showSuccess("Groups are Updated")
                 navigation.goBack()
             } else {
                 showError("Something went wrong")
@@ -209,14 +215,20 @@ const GroupSetting = ({ navigation }) => {
 
                     {
                         isFetching && (
-                            <View style={{ paddingVertical: 20 }}>
+                            <View style={{ paddingVertical: 10 }}>
                                 <ActivityIndicator size="large" />
                             </View>
                         )
                     }
 
                     <View style={styles.gap}>
-                        <Text style={{ textAlign: "center", alignSelf: "center" }}>Loading</Text>
+                        {
+                            isNoData?(
+                                <Text style={{ textAlign: "center", alignSelf: "center" }}>No Record Found</Text>
+                                ):(
+                                <Text style={{ textAlign: "center", alignSelf: "center" }}>Loading</Text>
+                            )
+                        }
                     </View>
 
                 </ScrollView>
@@ -265,7 +277,11 @@ const styles = StyleSheet.create({
         color: "#000"
     },
     gap: {
-        height: 90
+        height: 40,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        marginBottom: 10
     },
 
 

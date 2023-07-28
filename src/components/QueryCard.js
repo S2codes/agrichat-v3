@@ -1,13 +1,13 @@
-import { StyleSheet, Text, TouchableOpacity, View, Alert } from 'react-native'
+import { StyleSheet, Text, TouchableOpacity, View, Alert, Linking } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { useNavigation } from '@react-navigation/native'
 import { Image } from 'react-native';
 import { getItem } from '../Utils/Utils';
 import { AntDesign } from '@expo/vector-icons';
-import * as openAnything from "react-native-openanything"
 import { RFValue } from "react-native-responsive-fontsize";
 const QueryCard = ({ community, communityName = "", showUserName = true, data, onDelete }) => {
 
+    // console.log({ community, communityName });
 
     const attachment = JSON.parse(data.attachment)
 
@@ -54,15 +54,12 @@ const QueryCard = ({ community, communityName = "", showUserName = true, data, o
                         ]
                         }>
                         <Text style={styles.CommunitiyPara}>{communityName}</Text>
-                        
+
                     </View>
                 ) : (
                     ""
                 )
             }
-
-
-
 
             <View style={styles.cardTop}>
 
@@ -89,14 +86,14 @@ const QueryCard = ({ community, communityName = "", showUserName = true, data, o
                                 imageURL: attachment.attachment
                             })
                         }}>
-                        <Image source={{ uri: attachment.attachment }} resizeMode='contain' style={styles.attachmentImage} />
+                            <Image source={{ uri: attachment.attachment }} resizeMode='contain' style={styles.attachmentImage} />
                         </TouchableOpacity>
                     ) : (null)
                 }
                 {
                     isAttachmentPresent && attachment.type === "pdf" ? (
                         <TouchableOpacity style={styles.viewDocument} onPress={() => {
-                                openAnything.Pdf(attachment.attachment)
+                            Linking.openURL(attachment.attachment)
                         }}>
                             <AntDesign name="pdffile1" size={30} color="red" />
                             <Text style={styles.attachmentLabel}>View Doucment</Text>
@@ -119,19 +116,16 @@ const QueryCard = ({ community, communityName = "", showUserName = true, data, o
                     ) : (null)
                 }
 
-
-
                 {
                     data.userid == user ? (
                         <TouchableOpacity onPress={() => {
-                            // alert("working on progress")
                             Alert.alert(
                                 'Confirmation',
                                 'Do you want to delete this question ?',
                                 [
                                     {
                                         text: 'Cancel',
-                                        onPress: () => {},
+                                        onPress: () => { },
                                         style: 'cancel'
                                     },
                                     {
@@ -140,14 +134,11 @@ const QueryCard = ({ community, communityName = "", showUserName = true, data, o
                                             onDelete(data.id)
                                         }
                                     },
-                                    // {
-                                    //     cancelable: true 
-                                    // }
 
                                 ]
 
                             )
-                            
+
                         }}>
                             <Text style={styles.cardDeleteCta}>Delete</Text>
                         </TouchableOpacity>
@@ -171,24 +162,6 @@ const QueryCard = ({ community, communityName = "", showUserName = true, data, o
 }
 
 const styles = StyleSheet.create({
-
-    // modalView: {
-    //     borderColor: "red",
-    //     borderWidth: 2,
-    //     margin: 20,
-    //     backgroundColor: 'white',
-    //     borderRadius: 20,
-    //     padding: 35,
-    //     alignItems: 'center',
-    //     shadowColor: '#000',
-    //     shadowOffset: {
-    //       width: 0,
-    //       height: 2,
-    //     },
-    //     shadowOpacity: 0.25,
-    //     shadowRadius: 4,
-    //     elevation: 5,
-    // },
 
     viewDocument: {
         borderColor: "red",

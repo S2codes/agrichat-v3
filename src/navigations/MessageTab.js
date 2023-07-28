@@ -14,12 +14,10 @@ const MessageTab = () => {
             tabBarLabelStyle: { color: "#fff" },
             tabBarStyle: { backgroundColor: '#5D9C59', paddingTop: 10 },
             tabBarIndicatorStyle: { backgroundColor: "#fff" },
+            
         }} initialRouteName='Sent Messages' >
-
-
             <Tab.Screen name="Sent Messages" component={Messages} />
             <Tab.Screen name="Inbox" component={Inbox} />
-            {/* <Tab.Screen name="Messages" component={Communities} /> */}
         </Tab.Navigator>
     )
 }
