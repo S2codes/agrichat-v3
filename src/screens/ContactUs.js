@@ -1,4 +1,4 @@
-import { ScrollView, StyleSheet, Text,View, Linking } from 'react-native'
+import { ScrollView, StyleSheet, Text, View, Linking, Image } from 'react-native'
 import React from 'react'
 import { TouchableOpacity } from 'react-native'
 import { Feather } from '@expo/vector-icons';
@@ -16,7 +16,7 @@ const ContactUs = () => {
 
                 <View style={styles.iconBox}>
 
-                    <TouchableOpacity style={styles.item} onPress={() =>{
+                    <TouchableOpacity style={styles.item} onPress={() => {
                         Linking.openURL('tel:+919437130930')
                     }}>
                         <View style={styles.containerRound}>
@@ -37,18 +37,14 @@ const ContactUs = () => {
                     <TouchableOpacity style={styles.item} onPress={() => {
                         Linking.openURL('mailto:agrichatapp@gmail.com')
                     }}>
-                        <View style={styles.containerRound}>
-                        <Zocial name="email" size={35} color="#fff" />
-                        </View>
+                        <Image resizeMode='contain' source={require("../../assets/icons/gmail.png")} style={{ width: 50, aspectRatio: 1, height: undefined }} />
                         <Text style={styles.textCenter}>E-mail</Text>
                     </TouchableOpacity>
 
-                    <TouchableOpacity style={styles.item}  onPress={() =>{
+                    <TouchableOpacity style={styles.item} onPress={() => {
                         Linking.openURL('https://chat.whatsapp.com/IAU77o4soshBLzrTZAOK4b')
                     }} >
-                        <View style={styles.containerRound}>
-                        <FontAwesome name="whatsapp" size={35} color="#fff" />
-                        </View>
+                        <Image resizeMode='contain' source={require("../../assets/icons/whatsapp.png")} style={{ width: 50, aspectRatio: 1, height: undefined }} />
                         <Text style={styles.textCenter}>Join Whastapp Group</Text>
                     </TouchableOpacity>
 
@@ -60,18 +56,14 @@ const ContactUs = () => {
                     <TouchableOpacity style={styles.item} onPress={() => {
                         Linking.openURL('http://www.youtube.com/c/agrimach')
                     }} >
-                        <View style={styles.containerRound}>
-                        <AntDesign name="youtube" size={35} color="#fff" />
-                        </View>
+                        <Image resizeMode='contain' source={require("../../assets/icons/youtube.png")} style={{ width: 50, aspectRatio: 1, height: undefined }} />
                         <Text style={styles.textCenter}>Youtube</Text>
                     </TouchableOpacity>
 
                     <TouchableOpacity style={styles.item} onPress={() => {
                         Linking.openURL('https://www.facebook.com/AgriMachineIndia/')
                     }}>
-                        <View style={styles.containerRound}>
-                        <AntDesign name="facebook-square" size={35} color="#fff" />
-                        </View>
+                        <Image resizeMode='contain' source={require("../../assets/icons/facebook.png")} style={{ width: 50, aspectRatio: 1, height: undefined }} />
                         <Text style={styles.textCenter}>Facebook</Text>
                     </TouchableOpacity>
 
@@ -86,7 +78,7 @@ export default ContactUs
 
 const styles = StyleSheet.create({
     container: {
-      width: "100%"
+        width: "100%"
     },
     textLabel: {
         fontSize: RFValue(20),

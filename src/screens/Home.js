@@ -34,7 +34,7 @@ const Home = ({ navigation }) => {
 
         const slider2EndPoint = `${FETCHSLIDERIMG}&bannerid=2&state=${userStateId}`
         const slider2 = await apiGet(slider2EndPoint)
-        console.log(slider2);
+        
         setBanner2(slider2)
 
         // setAppUserId(USERID)

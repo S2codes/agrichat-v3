@@ -1,4 +1,4 @@
-import {  StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { StyleSheet, Text, TouchableOpacity, View, Button } from 'react-native'
 import React, { useState } from 'react'
 import { TextInput } from 'react-native-paper'
 import ButtonWithLoader from '../components/ButtonWithLoader'
@@ -105,65 +105,64 @@ const WriteQuery = ({ navigation, route }) => {
 
     return (
         <>
-        
-        
+
+
             <CheckConnection isConnected={isConnected} setIsConnected={setIsConnected} />
 
-            <View style={[styles.container, isConnected?{}:{display: 'none'}]}>
-                <TextInput style={styles.input}
-                    placeholder='Write Your Reply ...'
-                    multiline={true}
-                    numberOfLines={4}
-                    autoCorrect
-                    value={userQuestion}
-                    onChangeText={(msg) => {
-                        setUserQuestion(msg)
-                    }}
-                />
+            <View style={[styles.container, isConnected ? {} : { display: 'none' }]}>
 
-                <Text style={styles.label}>Upload Attachment</Text>
+                <View style={styles.inputContainer}>
+                    <TextInput style={styles.input}
+                        placeholder='Write Your Reply ...'
+                        multiline={true}
+                        numberOfLines={6}
+                        autoCorrect
+                        value={userQuestion}
+                        onChangeText={(msg) => {
+                            setUserQuestion(msg)
+                        }}
+                    />
 
-
-
-                {
-                    fileUri && <View style={styles.attacmentContainer}>
-                        <View style={styles.attachmentItem}>
-                            {
-                                fileDetails && fileDetails.type === 'application/pdf' ? (
-                                    <AntDesign name="pdffile1" size={30} color="#FA0F00" />
-                                ) : (
-                                    <Entypo name="image" size={32} color="#5D9C59" />
-                                )
-                            }
-
-
-                            <Text style={styles.fileName}>{fileDetails && fileDetails.name}</Text>
-                        </View>
-                        <TouchableOpacity onPress={() => {
-                            setFileUri('')
-                            setFileDetails()
-                        }}>
-                            <MaterialIcons name="cancel" size={32} color="black" />
+                    <View style={styles.actionGroup}>
+                        <TouchableOpacity style={{ marginEnd: 20 }} onPress={() => {
+                            onSelectAttachment()
+                        }} >
+                            <AntDesign name="paperclip" size={25} color="black" />
                         </TouchableOpacity>
+                        <Button title='Send' onPress={() => onSubmit()} />
                     </View>
 
 
-                }
+                </View>
 
 
                 {
-                    fileDetails ? (null) : (
-                        <TouchableOpacity style={styles.attachmentBtn} onPress={() => {
-                            onSelectAttachment()
-                        }}>
-                            <AntDesign name="upload" size={24} color="#fff" />
-                            <Text style={styles.attachmentBtnText}>Select Attachment</Text>
-                        </TouchableOpacity>
-                    )
+                    fileUri && <View>
+                        <Text style={styles.label}>Attachment</Text>
+                        <View style={styles.attacmentContainer}>
+                            <View style={styles.attachmentItem}>
+                                {
+                                    fileDetails && fileDetails.type === 'application/pdf' ? (
+                                        <AntDesign name="pdffile1" size={30} color="#FA0F00" />
+                                    ) : (
+                                        <Entypo name="image" size={32} color="#5D9C59" />
+                                    )
+                                }
+
+
+                                <Text style={styles.fileName}>{fileDetails && fileDetails.name}</Text>
+                            </View>
+                            <TouchableOpacity onPress={() => {
+                                setFileUri('')
+                                setFileDetails()
+                            }}>
+                                <MaterialIcons name="cancel" size={32} color="black" />
+                            </TouchableOpacity>
+                        </View>
+                    </View>
                 }
 
 
-                <ButtonWithLoader text={"Submit"} onPress={() => onSubmit()} />
             </View>
 
         </>
@@ -188,8 +187,7 @@ const styles = StyleSheet.create({
         borderRadius: 7,
         backgroundColor: "#fff",
         paddingVertical: 0,
-        marginBottom: 10
-
+        backgroundColor: "#c7fff2"
     },
 
     attachmentBtn: {
@@ -207,11 +205,6 @@ const styles = StyleSheet.create({
         color: "#fff",
         marginLeft: 10
     },
-    // fileStyle: {
-    //     width: "40%",
-    //     height: undefined,
-    //     aspectRatio: 1
-    // }
 
     attacmentContainer: {
         backgroundColor: "#ccf7d1",
@@ -234,7 +227,21 @@ const styles = StyleSheet.create({
     fileName: {
         fontSize: RFValue(14),
         marginLeft: 10
-    }
+    },
+    inputContainer: {
+        position: "relative",
+        marginBottom: 20,
+    },
+    actionGroup: {
+        padding: 10,
+        display: "flex",
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "flex-end",
+        position: "absolute",
+        bottom: 0,
+        right: 0
+    },
 
 
 

@@ -1,4 +1,4 @@
-import { StyleSheet, Text, TouchableOpacity, View, ActivityIndicator } from 'react-native'
+import { StyleSheet, Text, TouchableOpacity, View, ActivityIndicator, Button } from 'react-native'
 import React, { useState } from 'react'
 import { TextInput } from 'react-native-paper'
 import ButtonWithLoader from '../components/ButtonWithLoader'
@@ -92,7 +92,7 @@ const WriteMessage = ({ navigation, route }) => {
                 setIsLoading(true)
                 navigation.goBack()
             } else {
-             
+
                 showError("Internal Server Error")
             }
 
@@ -153,18 +153,9 @@ const WriteMessage = ({ navigation, route }) => {
                 }
 
 
-                <TextInput style={styles.input}
-                    placeholder='Write Your Message ...'
-                    multiline={true}
-                    numberOfLines={4}
-                    autoCorrect
-                    value={userQuestion}
-                    onChangeText={(msg) => {
-                        setUserQuestion(msg)
-                    }}
-                />
-
-                <Text style={styles.label}>Select User Group</Text>
+                <Text style={[styles.label, { textDecorationLine: "underline", textAlign: "center", }]} >
+                    Select group(s) to send message
+                </Text>
 
                 <View style={styles.tabletLeaf}>
 
@@ -214,48 +205,56 @@ const WriteMessage = ({ navigation, route }) => {
                 </View>
 
 
-                <Text style={styles.label}>Upload Attachment</Text>
+                <View style={styles.inputContainer}>
+                    <TextInput style={styles.input}
+                        placeholder='Write Your Message ...'
+                        multiline={true}
+                        numberOfLines={5}
+                        autoCorrect
+                        value={userQuestion}
+                        onChangeText={(msg) => {
+                            setUserQuestion(msg)
+                        }}
+                    />
 
-                {
-                    fileUri && <View style={styles.attacmentContainer}>
-                        <View style={styles.attachmentItem}>
-                            {
-                                fileDetails && fileDetails.type === 'application/pdf' ? (
-                                    <AntDesign name="pdffile1" size={30} color="#FA0F00" />
-                                ) : (
-                                    <Entypo name="image" size={32} color="#5D9C59" />
-                                )
-                            }
-
-
-                            <Text style={styles.fileName}>{fileDetails && fileDetails.name}</Text>
-                        </View>
-                        <TouchableOpacity onPress={() => {
-                            setFileUri('')
-                            setFileDetails()
-                        }}>
-                            <MaterialIcons name="cancel" size={32} color="black" />
+                    <View style={styles.actionGroup}>
+                        <TouchableOpacity style={{ marginEnd: 20 }} onPress={() => {
+                            onSelectAttachment()
+                        }} >
+                            <AntDesign name="paperclip" size={25} color="black" />
                         </TouchableOpacity>
+                        <Button title='Send' onPress={() => onSubmit()} />
                     </View>
 
-
-                }
-
+                </View>
 
 
                 {
-                    fileDetails ? (null) : (
-                        <TouchableOpacity style={styles.attachmentBtn} onPress={() => {
-                            onSelectAttachment()
-                        }}>
-                            <AntDesign name="upload" size={24} color="#fff" />
-                            <Text style={styles.attachmentBtnText}>Select Attachment</Text>
-                        </TouchableOpacity>
-                    )
+                    fileUri &&
+                    <View>
+                        <Text style={styles.label}>Attachment</Text>
+                        <View style={styles.attacmentContainer}>
+                            <View style={styles.attachmentItem}>
+                                {
+                                    fileDetails && fileDetails.type === 'application/pdf' ? (
+                                        <AntDesign name="pdffile1" size={30} color="#FA0F00" />
+                                    ) : (
+                                        <Entypo name="image" size={32} color="#5D9C59" />
+                                    )
+                                }
+
+                                <Text style={styles.fileName}>{fileDetails && fileDetails.name}</Text>
+                            </View>
+                            <TouchableOpacity onPress={() => {
+                                setFileUri('')
+                                setFileDetails()
+                            }}>
+                                <MaterialIcons name="cancel" size={32} color="black" />
+                            </TouchableOpacity>
+                        </View>
+                    </View>
                 }
 
-
-                <ButtonWithLoader text={"Submit"} onPress={() => onSubmit()} />
             </View>
 
         </>
@@ -271,14 +270,13 @@ const styles = StyleSheet.create({
         width: "100%",
         height: "100%",
         elevation: 5,
-
     },
     container: {
         padding: 10
     },
     label: {
         fontSize: 16,
-        marginBottom: 8
+        marginBottom: 8,
     },
     input: {
         borderWidth: 0.5,
@@ -287,8 +285,7 @@ const styles = StyleSheet.create({
         borderRadius: 7,
         backgroundColor: "#fff",
         paddingVertical: 0,
-        marginBottom: 10
-
+        backgroundColor: "#c7fff2"
     },
 
     attachmentBtn: {
@@ -353,7 +350,21 @@ const styles = StyleSheet.create({
     },
     selectedTabletText: {
         color: "#fff"
-    }
+    },
+    inputContainer: {
+        position: "relative",
+        marginBottom: 20
+    },
+    actionGroup: {
+        padding: 10,
+        display: "flex",
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "flex-end",
+        position: "absolute",
+        bottom: 0,
+        right: 0
+    },
 
 
 })

@@ -20,7 +20,7 @@ const ReplyCard = (prpos) => {
                 <Text style={styles.tStamp}>{replyData.date}</Text>
             </View>
             <View style={styles.replyContainer}>
-                <Text style={styles.para}>
+                <Text selectable={true} style={styles.para}>
                     {replyData.reply}
                 </Text>
 

@@ -77,7 +77,7 @@ const Community = ({ navigation, route }) => {
     
     if (allQuestion) {
       return allQuestion.map(item => (
-        <QueryCard key={item.id} community={false} data={item} onDelete={(id) => deleteQusetion(id)} />
+        <QueryCard key={item.id} community={false}  data={item} onDelete={(id) => deleteQusetion(id)} />
       ))
     } else {
       return <Text style={styles.msgLabel}>No Question Found</Text>

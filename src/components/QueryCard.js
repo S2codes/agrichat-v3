@@ -5,12 +5,9 @@ import { Image } from 'react-native';
 import { getItem } from '../Utils/Utils';
 import { AntDesign } from '@expo/vector-icons';
 import { RFValue } from "react-native-responsive-fontsize";
-const QueryCard = ({ community, communityName = "", showUserName = true, data, onDelete }) => {
-
-    // console.log({ community, communityName });
+const QueryCard = ({ community, communityName = "", communityCategory="",  showUserName = true, data, onDelete }) => {
 
     const attachment = JSON.parse(data.attachment)
-
     let isAttachmentPresent = false;
     if (attachment.type !== "none") {
         isAttachmentPresent = true
@@ -53,7 +50,7 @@ const QueryCard = ({ community, communityName = "", showUserName = true, data, o
                             { backgroundColor: communityBg }
                         ]
                         }>
-                        <Text style={styles.CommunitiyPara}>{communityName}</Text>
+                        <Text style={styles.CommunitiyPara}>{communityCategory} / {communityName}</Text>
 
                     </View>
                 ) : (
@@ -78,7 +75,7 @@ const QueryCard = ({ community, communityName = "", showUserName = true, data, o
             </View>
 
             <View style={styles.cardContent}>
-                <Text style={styles.para}>{data.question}</Text>
+                <Text style={styles.para} selectable={true}  >{data.question}</Text>
                 {
                     isAttachmentPresent && attachment.type === "jpg" ? (
                         <TouchableOpacity onPress={() => {
@@ -256,12 +253,14 @@ const styles = StyleSheet.create({
     cardContent: {
         paddingHorizontal: 7,
         paddingVertical: 4,
+        
     },
     attachmentImage: {
         width: 250,
         height: 250,
         marginTop: 7,
-        alignSelf: "center"
+        alignSelf: "center",
+        
     },
 
 

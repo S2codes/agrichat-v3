@@ -20,8 +20,9 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/logo.png",
-        "backgroundColor": "#ffffff"
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#000000",
+        "resizeMode": "contain"
       }, 
       "permissions": [
         "WRITE_EXTERNAL_STORAGE",

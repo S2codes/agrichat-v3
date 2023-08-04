@@ -192,10 +192,7 @@ const Signup = ({ navigation, route }) => {
   const privacyLink = "https://docs.google.com/document/d/1gFaKekoEZ4MBty-6rZeTyk0TgI2zLJJD/edit?usp=drivesdk&ouid=102516098685127899221&rtpof=true&sd=true"
 
   const onPrivacyClick = async () => {
-
-
     const supported = await Linking.canOpenURL(privacyLink);
-
     if (supported) {
       await Linking.openURL(privacyLink)
     } else {

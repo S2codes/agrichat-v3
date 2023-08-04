@@ -62,7 +62,7 @@ const MessageCard = ({ sendView = false, userView = true, deleteBtn = false, dat
                 ) : (null)
             }
 
-            <Text style={styles.messageText}>{data.message}</Text>
+            <Text selectable={true} style={styles.messageText}>{data.message}</Text>
 
 
             {

@@ -17,7 +17,6 @@ const Feed = ({ navigation }) => {
   const [appUserId, setAppUserId] = useState()
 
   const getQuestion = async (usereid) => {
-
     try {
       const res = await apiGet(`${GETQUESTIONBYUSERID}&userid=${usereid}`)
       setAllQuestion(res.data);
@@ -65,9 +64,8 @@ const Feed = ({ navigation }) => {
 
   const fetchQueries = () => {
     if (allQuestion) {
-      console.log(allQuestion);
       return allQuestion.map(item => (
-        <QueryCard key={item.id} community={true} communityName={item.groupname} showUserName={false} data={item}
+        <QueryCard key={item.id} community={true} communityCategory={item.groupcategory} communityName={item.groupname} showUserName={false} data={item}
           onDelete={(id) => deleteQusetion(id)} />
       ))
     } else {
