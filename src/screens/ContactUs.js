@@ -45,7 +45,7 @@ const ContactUs = () => {
                         Linking.openURL('https://chat.whatsapp.com/IAU77o4soshBLzrTZAOK4b')
                     }} >
                         <Image resizeMode='contain' source={require("../../assets/icons/whatsapp.png")} style={{ width: 50, aspectRatio: 1, height: undefined }} />
-                        <Text style={styles.textCenter}>Join Whastapp Group</Text>
+                        <Text style={styles.textCenter}>Join Whastapp {"\n"} Group</Text>
                     </TouchableOpacity>
 
                 </View>

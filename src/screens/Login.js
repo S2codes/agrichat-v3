@@ -253,6 +253,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     paddingHorizontal: 15,
+    backgroundColor: "#ade7923d"
   },
   dropdownItem: {
     width: "85%",

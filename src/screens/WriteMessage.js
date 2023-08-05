@@ -188,11 +188,11 @@ const WriteMessage = ({ navigation, route }) => {
                         <Text style={[styles.tabletLabel, selectedGroups.includes("startup / entrepreneur") ? styles.selectedTabletText : { color: "#000" }]}>Start Up / Entrepreneur</Text>
                     </TouchableOpacity>
 
-                    <TouchableOpacity style={[styles.tablet, selectedGroups.includes("manufacturer / dealer") ? styles.selectedBg : { backgroundColor: "#fff" }]}
-                        onPress={() => {
-                            updateSelectedGroups("manufacturer / dealer")
-                        }}>
-                        <Text style={[styles.tabletLabel, selectedGroups.includes("manufacturer/ dealer") ? styles.selectedTabletText : { color: "#000" }]}>Manufacturer/ Dealer</Text>
+
+                    <TouchableOpacity style={[styles.tablet, selectedGroups.includes("manufacturer/ dealer") ? styles.selectedBg : { backgroundColor: "#fff" }]} onPress={() => {
+                        updateSelectedGroups("manufacturer/ dealer")
+                    }}>
+                        <Text style={[styles.tabletLabel, selectedGroups.includes("manufacturer/ dealer") ? styles.selectedTabletText : { color: "#000" }]}>manufacturer/ dealer</Text>
                     </TouchableOpacity>
 
                     <TouchableOpacity style={[styles.tablet, selectedGroups.includes("student") ? styles.selectedBg : { backgroundColor: "#fff" }]} onPress={() => {

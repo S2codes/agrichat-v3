@@ -13,7 +13,7 @@ const TabStack = () => {
             tabBarActiveTintColor: '#000',
             tabBarLabelStyle: { color: "#fff" },
             tabBarStyle: { backgroundColor: '#5D9C59', paddingTop: 10 },
-            tabBarIndicatorStyle: { backgroundColor: "#fff" },
+            tabBarIndicatorStyle: { backgroundColor: "#9d4edd" },
 
         }}  initialRouteName='My Chats' >
 

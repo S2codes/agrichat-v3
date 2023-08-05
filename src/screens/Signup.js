@@ -461,6 +461,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     paddingHorizontal: 15,
+    backgroundColor: "#ade7923d"
   },
   dropdownIcon: {
     width: 20,
@@ -473,8 +474,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     elevation: 5,
     alignSelf: "center",
-    paddingBottom: 10
-
+    paddingBottom: 10,
   },
   searchInput: {
     width: "90%",
@@ -492,7 +492,8 @@ const styles = StyleSheet.create({
     borderBottomWidth: 0.2,
     borderColor: "#8e8e8e",
     alignSelf: "center",
-    justifyContent: "center"
+    justifyContent: "center",
+    
   },
 
   checkBoxGroup: {
