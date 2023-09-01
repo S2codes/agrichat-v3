@@ -1,4 +1,4 @@
-import { ActivityIndicator, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { ActivityIndicator, ScrollView, StyleSheet, Text, TouchableOpacity, View, Dimensions } from 'react-native'
 import React, { useState, useEffect } from 'react'
 import CommunityCard from '../components/CommunityCard'
 import { AntDesign } from '@expo/vector-icons';
@@ -9,6 +9,8 @@ import { useIsFocused } from '@react-navigation/native';
 import CheckConnection from '../Utils/CheckConnection';
 import { RFValue } from "react-native-responsive-fontsize";
 const Communities = ({ navigation }) => {
+
+  const screenHight = Dimensions.get("screen").height
 
   const [groupData, setGroupData] = useState([])
   const [isLoading, setIsLoading] = useState(false)
@@ -49,7 +51,7 @@ const Communities = ({ navigation }) => {
           )
         }
 
-        <View style={styles.defaultGroupContainer}>
+        <View style={[styles.defaultGroupContainer, {height: screenHight * 0.300}]}>
           <View style={styles.defaultLabel}>
             <TouchableOpacity onPress={() => {
               navigation.navigate("Group Setting")
@@ -78,7 +80,7 @@ const Communities = ({ navigation }) => {
 
         {/* Default  group  */}
 
-        <View style={styles.favouriteGroupContainer}>
+        <View style={[styles.favouriteGroupContainer, {height: screenHight * 0.322}]}>
           <View style={styles.favouriteLabel}>
             <Text style={styles.labelText}>Default Groups</Text>
           </View>
@@ -156,8 +158,7 @@ const Communities = ({ navigation }) => {
 
 
 
-
-        <View style={styles.otherGroupContainer}>
+        <View style={[styles.otherGroupContainer, {height: screenHight * 0.333}]}>
           <View style={styles.otherLabel}>
             <TouchableOpacity onPress={() => {
               navigation.navigate("Group Setting")
@@ -180,6 +181,7 @@ const Communities = ({ navigation }) => {
 
           </View>
         </View>
+
       </ScrollView>
     </>
   )
@@ -206,7 +208,6 @@ const styles = StyleSheet.create({
   favouriteGroupContainer: {
     backgroundColor: "#f9626270",
     paddingBottom: 13,
-    minHeight: 200
   },
 
   favouriteLabel: {
@@ -224,7 +225,6 @@ const styles = StyleSheet.create({
     marginTop: 5,
     backgroundColor: "#cfe2ff",
     paddingBottom: 13,
-    minHeight: 200
   },
 
   defaultLabel: {
@@ -241,8 +241,7 @@ const styles = StyleSheet.create({
   otherGroupContainer: {
     backgroundColor: "#5d9c5957",
     paddingBottom: 13,
-    marginBottom: 10,
-    minHeight: 200
+    // marginBottom: 10,
   },
 
   otherLabel: {

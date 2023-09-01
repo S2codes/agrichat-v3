@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, SafeAreaView, KeyboardAvoidingView, TouchableOpacity, Image } from 'react-native'
+import { StyleSheet, Text, View, SafeAreaView, KeyboardAvoidingView, TouchableOpacity, Image, Dimensions } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import TextInputWithLabel from '../components/TextInputWithLabel'
 import ButtonWithLoader from '../components/ButtonWithLoader'
@@ -16,10 +16,9 @@ import { RFValue } from "react-native-responsive-fontsize";
 
 const SignIn = ({ navigation }) => {
 
-  const dispatch = useDispatch()
-  // const dispatch = useDispatch()
+  const screenHeight = Dimensions.get('screen').height
 
-  
+  const dispatch = useDispatch()
 
   const [isClicked, setIsClicked] = useState(false)
   const [selectUserType, setSelectUserType] = useState("Select User type")
@@ -142,7 +141,7 @@ const SignIn = ({ navigation }) => {
           )
         }
 
-        <View style={styles.secContainer}>
+        <View style={[styles.secContainer, {height: screenHeight}]}>
           <Text style={styles.headerMain}>Sign In to Your Account</Text>
 
           {/* =========State dropdown=========  */}
@@ -186,6 +185,7 @@ const SignIn = ({ navigation }) => {
               placeholder={`Enter your ${emailMobileLable}`}
               label={emailMobileLable}
               onChange={(email) => updateState({ email })}
+              
             />
 
             <TextInputWithLabel
@@ -214,11 +214,10 @@ const styles = StyleSheet.create({
     elevation: 5
   },
   secContainer: {
-    height: "100%",
-    minHeight: 550,
+    // height: "100%",
     padding: 11,
     paddingTop: 20,
-    backgroundColor: "#fff",
+    backgroundColor: "#fff"
   },
   headerMain: {
     fontSize: RFValue(21),

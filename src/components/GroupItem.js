@@ -5,7 +5,7 @@ import { RFValue } from "react-native-responsive-fontsize";
 import { AntDesign } from '@expo/vector-icons';
 
 
-const GroupItem = ({ groupid, groupname, onSelect, onFavorite, isSelected = 0, isPinned = 0 }) => {
+const GroupItem = ({ groupid, groupname, onSelect, onFavorite, isSelected = 0, isPinned = 0}) => {
 
     const [isChecked, setIsChecked] = useState(false)
 
@@ -29,7 +29,7 @@ const GroupItem = ({ groupid, groupname, onSelect, onFavorite, isSelected = 0, i
     return (
 
         <View style={styles.groupContainer}>
-            <Text style={styles.groupName}>{groupname} </Text>
+            <Text style={styles.groupName}>{groupname} - {groupid} </Text>
             <View style={styles.groupItem}>
                 <Checkbox value={isChecked} onValueChange={() => {
                     setIsChecked(!isChecked)

@@ -22,9 +22,10 @@ const GroupSetting = ({ navigation }) => {
     const [isFetching, setIsFetching] = useState(false)
     const [isNoData, setIsNoData] = useState(false)
 
-    const fetchData = async () => {
+    const fetchData = async (userid) => {
+        console.log("user id in fetch data : ", userid);
         try {
-            const response = await apiGet(`${SAVEDGROUPS}&userid=${userId}&page=${page}`)
+            const response = await apiGet(`${SAVEDGROUPS}&userid=${userid}&page=${page}`)
             setIsLoading(false)
             if (response.response) {
                 setResponseData([...responseData, ...response.data])
@@ -35,6 +36,7 @@ const GroupSetting = ({ navigation }) => {
                     setIsNoData(true)
                 }
             }
+
 
         } catch (error) {
             showError("Internal Server Error")
@@ -50,6 +52,7 @@ const GroupSetting = ({ navigation }) => {
                 setIsFetching(true)
                 const userData = await getItem("authDetails")
                 const USERID = userData.userid
+                
                 setUserId(USERID)
                 const endpoint = `${JOINEDGROUPS}&user_id=${USERID}`;
                 const JoinedGroups = await apiGet(endpoint)
@@ -57,12 +60,13 @@ const GroupSetting = ({ navigation }) => {
                     setSelectedGroup(JoinedGroups.selectedGroupsId)
                     setPinnedGroup(JoinedGroups.pinnedGroupsId)
                 }
+                fetchData(USERID)
             } catch (error) {
 
             }
         }
         fetchPreData()
-        fetchData()
+        
 
     }, [])
 
@@ -70,7 +74,7 @@ const GroupSetting = ({ navigation }) => {
         if (selectedGroup.includes(id)) {
             setSelectedGroup(selectedGroup.filter(item => item !== id));
         } else {
-            setSelectedGroup([...selectedGroup, id])
+            setSelectedGroup([...selectedGroup, id]);
         }
     }
 
@@ -82,6 +86,7 @@ const GroupSetting = ({ navigation }) => {
         } else {
             setPinnedGroup([...pinnedGroup, id]);
         }
+
     }
 
     const getCommunityBg = (groupcatg) => {
@@ -134,6 +139,7 @@ const GroupSetting = ({ navigation }) => {
         try {
             const userSelectedGroup = JSON.stringify(selectedGroup)
             const userPinnedGroup = JSON.stringify(pinnedGroup)
+
             const result = await apiPost(UPDATEGROUPS, { userid: userId, groupsid: userSelectedGroup, favoriteGroupsId: userPinnedGroup })
             if (result.response) {
                 showSuccess("Groups are Updated")
@@ -156,7 +162,7 @@ const GroupSetting = ({ navigation }) => {
         const isEndReached = Math.floor(layoutMeasurement.height + contentOffset.y) >= Math.floor(contentSize.height);
         if (isEndReached && !isFetching) {
             setIsFetching(true)
-            fetchData();
+            fetchData(userId);
         }
     }
 
@@ -191,17 +197,19 @@ const GroupSetting = ({ navigation }) => {
                                 </View>
 
                                 {
-                                    item.groupData.map((group) =>
-
+                                    item.groupData.map((group, index) =>
+                                    (
                                         <GroupItem
-                                            key={group.groupId}
+                                            key={`${item.groupCategory}-${group.groupId}`}
                                             groupid={group.groupId}
                                             groupname={group.groupName}
                                             isSelected={group.selected}
                                             isPinned={group.pinned}
                                             onSelect={() => onSelect(group.groupId)}
                                             onFavorite={() => onPinned(group.groupId)}
+
                                         />
+                                    )
                                     )
 
                                 }
@@ -223,9 +231,9 @@ const GroupSetting = ({ navigation }) => {
 
                     <View style={styles.gap}>
                         {
-                            isNoData?(
+                            isNoData ? (
                                 <Text style={{ textAlign: "center", alignSelf: "center" }}>No Record Found</Text>
-                                ):(
+                            ) : (
                                 <Text style={{ textAlign: "center", alignSelf: "center" }}>Loading</Text>
                             )
                         }

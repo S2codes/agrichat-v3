@@ -1,4 +1,4 @@
-import { StyleSheet, Text, TouchableOpacity, View, ActivityIndicator, Button } from 'react-native'
+import { StyleSheet, Text, TouchableOpacity, View, ActivityIndicator, Button, KeyboardAvoidingView, } from 'react-native'
 import React, { useState } from 'react'
 import { TextInput } from 'react-native-paper'
 import { MaterialIcons } from '@expo/vector-icons';
@@ -119,72 +119,79 @@ const WriteQuery = ({ navigation, route }) => {
     }
 
     return (
+        <KeyboardAvoidingView>
+            <View style={styles.container}>
 
-        <View style={styles.container}>
+
+                {
+                    isLoading ? (null) : (
+                        <ActivityIndicator size="large" style={styles.ActivityIndicatorLoading} />
+                    )
+                }
+
+                <View style={{
+                    position: "absolute",
+                    bottom: 5,
+                    left: 10,
+                    width: "100%"
+                }}>
+
+                    <View style={styles.inputContainer}>
+
+                        <TextInput style={styles.input}
+                            placeholder='Write Your Question ...'
+                            multiline={true}
+                            numberOfLines={6}
+                            autoCorrect
+                            value={userQuestion}
+                            onChangeText={(msg) => {
+                                setUserQuestion(msg)
+                            }}
+                        />
+
+                        <View style={styles.actionGroup}>
+                            <TouchableOpacity style={{ marginEnd: 20 }} onPress={() => {
+                                onSelectAttachment()
+                            }} >
+                                <AntDesign name="paperclip" size={25} color="black" />
+                            </TouchableOpacity>
+                            <Button title='Send' onPress={() => onSubmit()} />
+                        </View>
+
+                    </View>
 
 
-            {
-                isLoading ? (null) : (
-                    <ActivityIndicator size="large" style={styles.ActivityIndicatorLoading} />
-                )
-            }
+                    {
+                        fileUri && <View>
 
-            <View style={styles.inputContainer}>
+                            <Text style={styles.label}>Attachment</Text>
+                            <View style={styles.attacmentContainer}>
+                                <View style={styles.attachmentItem}>
+                                    {
+                                        fileDetails && fileDetails.type === 'application/pdf' ? (
+                                            <AntDesign name="pdffile1" size={30} color="#FA0F00" />
+                                        ) : (
+                                            <Entypo name="image" size={32} color="#5D9C59" />
+                                        )
+                                    }
 
-                <TextInput style={styles.input}
-                    placeholder='Write Your Question ...'
-                    multiline={true}
-                    numberOfLines={6}
-                    autoCorrect
-                    value={userQuestion}
-                    onChangeText={(msg) => {
-                        setUserQuestion(msg)
-                    }}
-                />
 
-                <View style={styles.actionGroup}>
-                    <TouchableOpacity style={{ marginEnd: 20 }} onPress={() => {
-                        onSelectAttachment()
-                    }} >
-                        <AntDesign name="paperclip" size={25} color="black" />
-                    </TouchableOpacity>
-                    <Button title='Send' onPress={() => onSubmit()} />
+                                    <Text style={styles.fileName}>{fileDetails && fileDetails.name}</Text>
+                                </View>
+                                <TouchableOpacity onPress={() => {
+                                    setFileUri('')
+                                    setFileDetails()
+                                }}>
+                                    <MaterialIcons name="cancel" size={32} color="black" />
+                                </TouchableOpacity>
+                            </View>
+                        </View>
+                    }
+
                 </View>
 
             </View>
-
-
-
-
-            {
-                fileUri && <View>
-
-                    <Text style={styles.label}>Attachment</Text>
-                    <View style={styles.attacmentContainer}>
-                        <View style={styles.attachmentItem}>
-                            {
-                                fileDetails && fileDetails.type === 'application/pdf' ? (
-                                    <AntDesign name="pdffile1" size={30} color="#FA0F00" />
-                                ) : (
-                                    <Entypo name="image" size={32} color="#5D9C59" />
-                                )
-                            }
-
-
-                            <Text style={styles.fileName}>{fileDetails && fileDetails.name}</Text>
-                        </View>
-                        <TouchableOpacity onPress={() => {
-                            setFileUri('')
-                            setFileDetails()
-                        }}>
-                            <MaterialIcons name="cancel" size={32} color="black" />
-                        </TouchableOpacity>
-                    </View>
-                </View>
-            }
-
-
-        </View>
+        </KeyboardAvoidingView>
 
     )
 }
@@ -193,7 +200,9 @@ export default WriteQuery
 
 const styles = StyleSheet.create({
     container: {
-        padding: 10
+        padding: 10,
+        height: "100%"
+
     },
     ActivityIndicatorLoading: {
         width: "100%",
@@ -253,7 +262,7 @@ const styles = StyleSheet.create({
     },
     inputContainer: {
         position: "relative",
-        marginBottom: 20
+        marginBottom: 20,
     },
     actionGroup: {
         padding: 10,

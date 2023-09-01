@@ -3,9 +3,14 @@ import React, { useEffect, useState } from 'react'
 import { useNavigation } from '@react-navigation/native'
 import { Image } from 'react-native';
 import { getItem } from '../Utils/Utils';
-import { AntDesign } from '@expo/vector-icons';
+import { AntDesign, MaterialCommunityIcons, FontAwesome } from '@expo/vector-icons';
 import { RFValue } from "react-native-responsive-fontsize";
-const QueryCard = ({ community, communityName = "", communityCategory="",  showUserName = true, data, onDelete }) => {
+import * as FileSystem from 'expo-file-system';
+import { shareAsync } from 'expo-sharing'
+
+
+
+const QueryCard = ({ community, communityName = "", communityCategory = "", showUserName = true, data, onDelete }) => {
 
     const attachment = JSON.parse(data.attachment)
     let isAttachmentPresent = false;
@@ -32,12 +37,65 @@ const QueryCard = ({ community, communityName = "", communityCategory="",  showU
     }, [])
 
 
+    // save file in storage
+
+    const getfileName = (uri) => {
+        const currentDate = new Date();
+        const formattedDate = currentDate.toISOString().replace(/[-:.T]/g, '').substr(0, 14);
+        const urlParts = uri.split('.');
+        const fileType = urlParts[urlParts.length - 1];
+        const filename = 'AgriChat' + formattedDate + '.' + fileType;
+        return filename
+    }
+
+
+    const handerDownload = async (uri) => {
+        const filename = getfileName(uri);
+        const result = await FileSystem.downloadAsync(
+            uri,
+            FileSystem.documentDirectory + filename,
+        )
+
+        const mimetype = result.headers['content-type']
+        console.log("mime type " );
+        console.log(result);
+        const permissions = await FileSystem.StorageAccessFramework.requestDirectoryPermissionsAsync();
+        if (permissions.granted) {
+            const base64 = await FileSystem.readAsStringAsync(uri, { encoding: FileSystem.EncodingType.Base64 })
+            await FileSystem.StorageAccessFramework.createFileAsync(permissions.directoryUri, filename, mimetype)
+                .then(async (uri) => {
+                    await FileSystem.writeAsStringAsync(uri, base64, { encoding: FileSystem.EncodingType.Base64 })
+                    alert("File Downloaded")
+                }).catch((e) => {
+                    console.log("e : ");
+                    console.log(e);
+                })
+        } else {
+            shareAsync(uri)
+        }
+
+    }
+
+
+    // share file 
+    const handerShare = async (uri) => {
+        const filename = getfileName(uri);
+        const result = await FileSystem.downloadAsync(
+            uri,
+            FileSystem.documentDirectory + filename
+        )
+        shareAsync(result.uri)
+    }
+
+
+
+    // save file in storage 
+
 
 
     let communityBg = "#5D9C59"
 
     const navigation = useNavigation()
-
 
     return (
         <View style={styles.cardBody}>
@@ -78,23 +136,67 @@ const QueryCard = ({ community, communityName = "", communityCategory="",  showU
                 <Text style={styles.para} selectable={true}  >{data.question}</Text>
                 {
                     isAttachmentPresent && attachment.type === "jpg" ? (
-                        <TouchableOpacity onPress={() => {
-                            navigation.navigate("View Image", {
-                                imageURL: attachment.attachment
-                            })
-                        }}>
-                            <Image source={{ uri: attachment.attachment }} resizeMode='contain' style={styles.attachmentImage} />
-                        </TouchableOpacity>
+                        <View>
+                            <TouchableOpacity onPress={() => {
+                                navigation.navigate("View Image", {
+                                    imageURL: attachment.attachment
+                                })
+                            }}>
+                                <Image source={{ uri: attachment.attachment }} resizeMode='contain' style={styles.attachmentImage} />
+                            </TouchableOpacity>
+
+                            <View style={styles.actionHandeler} >
+                                <TouchableOpacity style={styles.actionItem} onPress={() => {
+                                    handerDownload(attachment.attachment)
+                                }}>
+                                    <MaterialCommunityIcons name="download" size={30} color="#5D9C59" />
+                                    <Text style={styles.actionText} >Download</Text>
+                                </TouchableOpacity>
+
+                                <TouchableOpacity style={styles.actionItem} onPress={() => {
+                                    handerShare(attachment.attachment)
+                                }}>
+                                    <FontAwesome name="share" size={30} color="#5D9C59" />
+                                    <Text style={styles.actionText}>Share</Text>
+                                </TouchableOpacity>
+                            </View>
+
+
+                        </View>
                     ) : (null)
                 }
                 {
                     isAttachmentPresent && attachment.type === "pdf" ? (
-                        <TouchableOpacity style={styles.viewDocument} onPress={() => {
-                            Linking.openURL(attachment.attachment)
-                        }}>
-                            <AntDesign name="pdffile1" size={30} color="red" />
-                            <Text style={styles.attachmentLabel}>View Doucment</Text>
-                        </TouchableOpacity>
+                        <View>
+                            <View style={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "space-between" }} >
+                                <TouchableOpacity style={styles.viewDocument} onPress={() => {
+                                    Linking.openURL(attachment.attachment)
+                                }}>
+                                    <AntDesign name="pdffile1" size={30} color="red" />
+                                    <Text style={styles.attachmentLabel}>View Doucment</Text>
+                                </TouchableOpacity>
+
+                            </View>
+
+                            <View style={styles.actionHandeler} >
+                                <TouchableOpacity style={styles.actionItem} onPress={() => {
+                                    // handerDownload(attachment.attachment)
+                                    handerDownload(attachment.attachment_downloadlink)
+                                }}>
+                                    <MaterialCommunityIcons name="download" size={30} color="#5D9C59" />
+                                    <Text style={styles.actionText} >Download</Text>
+                                </TouchableOpacity>
+
+                                <TouchableOpacity style={styles.actionItem} onPress={() => {
+                                    handerShare(attachment.attachment)
+                                }}>
+                                    <FontAwesome name="share" size={30} color="#5D9C59" />
+                                    <Text style={styles.actionText}>Share</Text>
+                                </TouchableOpacity>
+                            </View>
+
+                        </View>
+
                     ) : (null)
                 }
             </View>
@@ -253,14 +355,14 @@ const styles = StyleSheet.create({
     cardContent: {
         paddingHorizontal: 7,
         paddingVertical: 4,
-        
+
     },
     attachmentImage: {
-        width: 250,
-        height: 250,
+        width: "100%",
+        flex: 1,
+        aspectRatio: 1,
         marginTop: 7,
         alignSelf: "center",
-        
     },
 
 
@@ -276,7 +378,6 @@ const styles = StyleSheet.create({
         display: "flex",
         flexDirection: "row",
         alignItems: "center",
-        // justifyContent: "space-around",
         justifyContent: "space-between",
         paddingHorizontal: 7
 
@@ -302,7 +403,24 @@ const styles = StyleSheet.create({
         backgroundColor: "red",
         paddingHorizontal: 13,
         paddingVertical: 5
-
+    },
+    actionHandeler: {
+        marginTop: 10,
+        display: "flex",
+        alignItems: "center",
+        flexDirection: "row",
+        justifyContent: "space-between"
+    },
+    actionItem: {
+        display: "flex",
+        alignItems: "center",
+        flexDirection: "row",
+        paddingHorizontal: 3
+    },
+    actionText: {
+        color: "#504A4B",
+        fontSize: 13,
+        marginStart: 5
     }
 
 

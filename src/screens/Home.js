@@ -30,6 +30,7 @@ const Home = ({ navigation }) => {
 
         const slider1EndPoint = `${FETCHSLIDERIMG}&bannerid=1&state=${userStateId}`
         const slider1 = await apiGet(slider1EndPoint)
+        // console.log(slider1);
         setBanner1(slider1)
 
         const slider2EndPoint = `${FETCHSLIDERIMG}&bannerid=2&state=${userStateId}`

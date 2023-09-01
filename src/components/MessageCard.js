@@ -12,7 +12,7 @@ const MessageCard = ({ sendView = false, userView = true, deleteBtn = false, dat
         <View style={styles.cardContainer}>
             {sendView ? (
                 <View style={styles.sendContainer}>
-                    <Text style={styles.label}>Send To : </Text>
+                    <Text style={styles.label}>Sent To : </Text>
                     <View style={styles.cardTop}>
                         {
                             data && data.sendto && data.sendto.farmer === '1' ? (
