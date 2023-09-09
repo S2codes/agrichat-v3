@@ -7,6 +7,8 @@ import { AntDesign, MaterialCommunityIcons, FontAwesome } from '@expo/vector-ico
 import { RFValue } from "react-native-responsive-fontsize";
 import * as FileSystem from 'expo-file-system';
 import { shareAsync } from 'expo-sharing'
+import * as MediaLibrary from 'expo-media-library';
+import * as Sharing from 'expo-sharing';
 
 
 
@@ -44,40 +46,41 @@ const QueryCard = ({ community, communityName = "", communityCategory = "", show
         const formattedDate = currentDate.toISOString().replace(/[-:.T]/g, '').substr(0, 14);
         const urlParts = uri.split('.');
         const fileType = urlParts[urlParts.length - 1];
-        const filename = 'AgriChat' + formattedDate + '.' + fileType;
+        const filename = formattedDate + '.' + fileType;
         return filename
     }
 
 
-    const handerDownload = async (uri) => {
-        const filename = getfileName(uri);
-        const result = await FileSystem.downloadAsync(
-            uri,
-            FileSystem.documentDirectory + filename,
-        )
+    // const handerDownload = async (uri) => {
+    //     const filename = getfileName(uri);
+    //     const result = await FileSystem.downloadAsync(
+    //         uri,
+    //         FileSystem.documentDirectory + filename,
+    //     )
 
-        const mimetype = result.headers['content-type']
-        console.log("mime type " );
-        console.log(result);
-        const permissions = await FileSystem.StorageAccessFramework.requestDirectoryPermissionsAsync();
-        if (permissions.granted) {
-            const base64 = await FileSystem.readAsStringAsync(uri, { encoding: FileSystem.EncodingType.Base64 })
-            await FileSystem.StorageAccessFramework.createFileAsync(permissions.directoryUri, filename, mimetype)
-                .then(async (uri) => {
-                    await FileSystem.writeAsStringAsync(uri, base64, { encoding: FileSystem.EncodingType.Base64 })
-                    alert("File Downloaded")
-                }).catch((e) => {
-                    console.log("e : ");
-                    console.log(e);
-                })
-        } else {
-            shareAsync(uri)
-        }
+    //     const mimetype = result.headers['content-type']
 
-    }
+    //     const permissions = await FileSystem.StorageAccessFramework.requestDirectoryPermissionsAsync();
+    //     if (permissions.granted) {
+    //         const base64 = await FileSystem.readAsStringAsync(uri, { encoding: FileSystem.EncodingType.Base64 })
+    //         await FileSystem.StorageAccessFramework.createFileAsync(permissions.directoryUri, filename, mimetype)
+    //             .then(async (uri) => {
+    //                 await FileSystem.writeAsStringAsync(uri, base64, { encoding: FileSystem.EncodingType.Base64 })
+    //                 alert("File Downloaded")
+    //             }).catch((e) => {
+    //                 console.log("e : ");
+    //                 console.log(e);
+    //             })
+    //     } else {
+    //         shareAsync(uri)
+    //     }
+
+    // }
 
 
-    // share file 
+
+    // share file     
+    // share     
     const handerShare = async (uri) => {
         const filename = getfileName(uri);
         const result = await FileSystem.downloadAsync(
@@ -147,10 +150,10 @@ const QueryCard = ({ community, communityName = "", communityCategory = "", show
 
                             <View style={styles.actionHandeler} >
                                 <TouchableOpacity style={styles.actionItem} onPress={() => {
-                                    handerDownload(attachment.attachment)
+                                    handelImgDownload(attachment.attachment)
                                 }}>
                                     <MaterialCommunityIcons name="download" size={30} color="#5D9C59" />
-                                    <Text style={styles.actionText} >Download</Text>
+                                    <Text style={styles.actionText} >Download img</Text>
                                 </TouchableOpacity>
 
                                 <TouchableOpacity style={styles.actionItem} onPress={() => {
@@ -170,7 +173,8 @@ const QueryCard = ({ community, communityName = "", communityCategory = "", show
                         <View>
                             <View style={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "space-between" }} >
                                 <TouchableOpacity style={styles.viewDocument} onPress={() => {
-                                    Linking.openURL(attachment.attachment)
+                                    // Linking.openURL(attachment.attachment)
+                                    navigation.navigate('View Pdf', { uri: attachment.attachment })
                                 }}>
                                     <AntDesign name="pdffile1" size={30} color="red" />
                                     <Text style={styles.attachmentLabel}>View Doucment</Text>
@@ -179,12 +183,14 @@ const QueryCard = ({ community, communityName = "", communityCategory = "", show
                             </View>
 
                             <View style={styles.actionHandeler} >
+
                                 <TouchableOpacity style={styles.actionItem} onPress={() => {
                                     // handerDownload(attachment.attachment)
-                                    handerDownload(attachment.attachment_downloadlink)
+                                    // handerDownload(attachment.attachment_downloadlink)
+                                    Linking.openURL(attachment.attachment)
                                 }}>
                                     <MaterialCommunityIcons name="download" size={30} color="#5D9C59" />
-                                    <Text style={styles.actionText} >Download</Text>
+                                    <Text style={styles.actionText} >Download pdf</Text>
                                 </TouchableOpacity>
 
                                 <TouchableOpacity style={styles.actionItem} onPress={() => {

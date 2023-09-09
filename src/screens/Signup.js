@@ -96,9 +96,8 @@ const Signup = ({ navigation, route }) => {
   // validation 
   const isValidData = () => {
 
-
     let error = true
-
+    
     if (userType === 'farmer') {
       error = Validation({
         userName, password, contact

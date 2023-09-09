@@ -77,7 +77,7 @@ export default function (data) {
             if (phoneNumberRegex.test(contact)) {
                 return ''
             }else{
-                return 'Enter Valid Your 10 Digit Mobile Number'
+                return 'Enter Valid 10 Digit Mobile Number'
             }
 
             // let minLengthValidation = checkMinLength(contact, 10, 'contact')

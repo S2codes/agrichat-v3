@@ -15,7 +15,6 @@ const ViewImage = ({ navigation, route }) => {
     const windowHeight = Dimensions.get('window').height;
     const [isConnected, setIsConnected] = useState(true);
 
-    // const DownLoadImage = ({ imgUri }) => {
     const handelDownload = async (imgUri) => {
 
         try {

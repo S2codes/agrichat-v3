@@ -13,7 +13,7 @@ const MessageTab = () => {
             tabBarActiveTintColor: '#000',
             tabBarLabelStyle: { color: "#fff" },
             tabBarStyle: { backgroundColor: '#5D9C59', paddingTop: 10 },
-            tabBarIndicatorStyle: { backgroundColor: "#0000" },
+            tabBarIndicatorStyle: { backgroundColor: "#0000", borderWidth: 2 },
             
         }} initialRouteName='Sent Messages' >
             <Tab.Screen name="Sent Messages" component={Messages} />

@@ -8,7 +8,13 @@ const ImgSlider = ({ data }) => {
 
     return (
         <View style={styles.container}>
-            <Swiper autoplay={true} showsPagination={true} loop={true} showsButtons dotColor='#5D9C59' autoplayTimeout={4.5} >
+            <Swiper 
+            autoplay={true}
+             showsPagination={true}
+              loop={true} 
+              showsButtons 
+              dotColor='#5D9C59'
+               autoplayTimeout={4.5} >
                 {
                     data && data.map((item) => (
                         <TouchableOpacity style={styles.slide} key={item.id} onPress={() => {
