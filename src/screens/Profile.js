@@ -1,7 +1,7 @@
 import { ActivityIndicator, Image, StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import { TouchableOpacity } from 'react-native'
-import { FontAwesome } from '@expo/vector-icons';
+// import { FontAwesome } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 import { useState } from 'react';
 import { useEffect } from 'react';
@@ -13,6 +13,7 @@ import { showError } from '../Utils/HelpFunctions';
 import CheckConnection from '../Utils/CheckConnection';
 
 import { RFValue } from "react-native-responsive-fontsize";
+import UserDetails from '../components/UserDetails';
 const Profile = ({ navigation }) => {
 
   const [userDetails, setUserDetails] = useState()
@@ -67,22 +68,30 @@ const Profile = ({ navigation }) => {
               resizeMode='contain' style={styles.profileImg} />
           </View>
 
-
-          <Text style={styles.userName}>{userDetails && userDetails.name ? userDetails.name : ""}</Text>
-          <Text style={styles.userType}>{userDetails && userDetails.type ? userDetails.type : ""}</Text>
+          <View style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center"
+          }}>
+            <Text style={styles.userName}>{userDetails && userDetails.name ? userDetails.name : ""}</Text>
+            <Text style={styles.userType}>{userDetails && userDetails.type ? userDetails.type : ""}</Text>
+          </View>
 
         </View>
 
+        <UserDetails data={userDetails} />
+
         <View style={styles.itemList}>
 
-          <TouchableOpacity style={styles.item} onPress={() => {
+          {/* <TouchableOpacity style={styles.item} onPress={() => {
             navigation.navigate("My Details", {
               userDetails: userDetails
             })
           }}>
             <FontAwesome name="user" style={styles.itemIcon} size={24} color="#fff" />
             <Text style={styles.Label}>My Details</Text>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
 
 
           <TouchableOpacity style={styles.item} onPress={() => {
@@ -92,12 +101,12 @@ const Profile = ({ navigation }) => {
             <Text style={styles.Label}>LogOut</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.item} onPress={() => {
+          {/* <TouchableOpacity style={styles.item} onPress={() => {
             alert("Working in Progress")
           }}>
             <AntDesign name="questioncircle" size={24} color="#fff" />
             <Text style={styles.Label}>Help & Support</Text>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
 
 
         </View>
@@ -118,6 +127,11 @@ const styles = StyleSheet.create({
   },
   container: {
     padding: 5,
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-around",
+    paddingBottom: 12
   },
   Maincontainer: {
     height: "100%",
@@ -126,12 +140,14 @@ const styles = StyleSheet.create({
   profileContainer: {
     borderRadius: 70,
     alignSelf: "center",
-    marginTop: 40,
+    marginTop: 15,
     padding: 3,
-    backgroundColor: "#5D9C59"
+    backgroundColor: "#5D9C59",
+    width: "25%"
+
   },
   profileImg: {
-    width: "38%",
+    width: "100%",
     height: undefined,
     aspectRatio: 1,
     borderRadius: 70
@@ -156,29 +172,21 @@ const styles = StyleSheet.create({
   },
 
   itemList: {
-    borderTopRightRadius: 30,
-    borderTopLeftRadius: 30,
-    padding: 13,
-    backgroundColor: "#5D9C59",
-    marginTop: 10,
-    position: "absolute",
-    bottom: 0,
-    left: 0,
     width: "100%"
   },
   item: {
     padding: 12,
-    borderColor: "#fff",
-    borderBottomWidth: 0.3,
+    paddingHorizontal: 20,
+    backgroundColor: "#5D9C59",
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
-    marginBottom: 20
+    alignSelf:"center"
   },
 
   Label: {
     fontSize: RFValue(18),
-    marginStart: 25,
+    marginStart: 15,
     color: "#fff"
   }
 
