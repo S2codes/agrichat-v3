@@ -12,6 +12,7 @@ import {
 import TabStack from './TabStack'
 import MessageTab from './MessageTab'
 import ViewPdf from '../screens/ViewPdf'
+import LanguageSetting from '../screens/LanguageSetting'
 
 export default function (Stack) {
 
@@ -36,6 +37,7 @@ export default function (Stack) {
             <Stack.Screen name="View Image"  component={ViewImage} options={{ headerShown: false }} />
             <Stack.Screen name="Contact Us" component={ContactUs} />
             <Stack.Screen name="View Pdf" component={ViewPdf} />
+            <Stack.Screen name="Language Setting" component={LanguageSetting} />
             
         </>
 

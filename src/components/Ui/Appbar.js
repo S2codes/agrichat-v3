@@ -21,7 +21,7 @@ const Appbar = () => {
         <AppBar title="AgriChat"
             color='#5D9C59'
             tintColor='#fff'
-            style={{ paddingTop: 5 }}
+            style={{ paddingTop: 10, marginTop: 5 }}
 
             trailing={props => (
 
@@ -51,21 +51,36 @@ const Appbar = () => {
                                 hideMenu
                                 navigation.navigate("Profile")
                             }}>
-                                <Text style={styles.menuItem}>Profile</Text>
+                                <Text style={styles.menuItem}>Share this App</Text>
                             </MenuItem>
                             <MenuDivider color='#fff' />
 
-                            <MenuItem style={styles.menuItem} onPress={ () => {
-                             hideMenu
-                             navigation.navigate('Contact Us')
+                            <MenuItem onPress={() => {
+                                hideMenu
+                                navigation.navigate("Profile")
+                            }}>
+                                <Text style={styles.menuItem}>My Profile</Text>
+                            </MenuItem>
+                            <MenuDivider color='#fff' />
+
+                            <MenuItem style={styles.menuItem} onPress={() => {
+                                hideMenu
+                                navigation.navigate('Language Setting')
+                            }
+                            }>
+                                <Text style={styles.menuItem}>Change Language</Text>
+                            </MenuItem>
+                            <MenuDivider color='#fff' />
+
+                            <MenuItem style={styles.menuItem} onPress={() => {
+                                hideMenu
+                                navigation.navigate('Contact Us')
                             }}>
                                 <Text style={styles.menuItem}>Contact Us</Text>
                             </MenuItem>
                             <MenuDivider color='#fff' />
 
-                            {/* <MenuItem style={styles.menuItem} onPress={hideMenu}>
-                                <Text style={styles.menuItem}>Change Language</Text>
-                            </MenuItem> */}
+
 
                         </Menu>
                     </View>

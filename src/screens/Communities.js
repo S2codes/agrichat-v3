@@ -80,7 +80,7 @@ const Communities = ({ navigation }) => {
 
         {/* Default  group  */}
 
-        <View style={[styles.favouriteGroupContainer, {height: screenHight * 0.322}]}>
+        <View style={[styles.favouriteGroupContainer, {flex: 1}]}>
           <View style={styles.favouriteLabel}>
             <Text style={styles.labelText}>Default Groups</Text>
           </View>
@@ -158,7 +158,7 @@ const Communities = ({ navigation }) => {
 
 
 
-        <View style={[styles.otherGroupContainer, {height: screenHight * 0.333}]}>
+        <View style={[styles.otherGroupContainer, {minHeight: screenHight * 0.333, flex: 1}]}>
           <View style={styles.otherLabel}>
             <TouchableOpacity onPress={() => {
               navigation.navigate("Group Setting")

@@ -8,6 +8,7 @@ import { showError } from '../Utils/HelpFunctions';
 import { FETCHSLIDERIMG, FETCHUSERDETAILS } from '../config/urls';
 import { RFValue } from "react-native-responsive-fontsize";
 import ImgSlider from '../components/Ui/ImgSlider';
+import { useIsFocused } from '@react-navigation/native';
 
 
 const Home = ({ navigation }) => {
@@ -16,7 +17,7 @@ const Home = ({ navigation }) => {
 
   const [banner1, setBanner1] = useState([])
   const [banner2, setBanner2] = useState([])
-
+  const isFocused = useIsFocused()
 
   useEffect(() => {
     const fetchData = async () => {
@@ -30,14 +31,17 @@ const Home = ({ navigation }) => {
 
         const slider1EndPoint = `${FETCHSLIDERIMG}&bannerid=1&state=${userStateId}`
         const slider1 = await apiGet(slider1EndPoint)
-        // console.log(slider1);
-        setBanner1(slider1)
+        
+        if (slider1.data.length > 0) {
+          setBanner1(slider1)
+        }
 
         const slider2EndPoint = `${FETCHSLIDERIMG}&bannerid=2&state=${userStateId}`
         const slider2 = await apiGet(slider2EndPoint)
-        
-        setBanner2(slider2)
-
+          
+          if (slider2.data.length > 1) {
+            setBanner2(slider2)
+          }
         // setAppUserId(USERID)
         // setIsLoading(true)
 
@@ -47,7 +51,7 @@ const Home = ({ navigation }) => {
     }
 
     fetchData()
-  }, [])
+  }, [isFocused])
 
 
 

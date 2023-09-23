@@ -11,9 +11,9 @@ const TabStack = () => {
     return (
         <Tab.Navigator screenOptions={{
             tabBarActiveTintColor: '#000',
-            tabBarLabelStyle: { color: "#fff" },
+            tabBarLabelStyle: { color: "#fff", fontSize: 19 },
             tabBarStyle: { backgroundColor: '#5D9C59', paddingTop: 10 },
-            tabBarIndicatorStyle: { backgroundColor: "#fff", borderBottomWidth: 2, },
+            tabBarIndicatorStyle: { backgroundColor: "#fff", borderBottomWidth: 2 },
 
         }}  initialRouteName='My Chats' >
 

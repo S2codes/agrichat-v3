@@ -11,10 +11,10 @@ const MessageTab = () => {
     return (
         <Tab.Navigator screenOptions={{
             tabBarActiveTintColor: '#000',
-            tabBarLabelStyle: { color: "#fff" },
+            tabBarLabelStyle: { color: "#fff", fontSize: 19 },
             tabBarStyle: { backgroundColor: '#5D9C59', paddingTop: 10 },
             tabBarIndicatorStyle: { backgroundColor: "#0000", borderWidth: 2 },
-            
+
         }} initialRouteName='Sent Messages' >
             <Tab.Screen name="Sent Messages" component={Messages} />
             <Tab.Screen name="Inbox" component={Inbox} />
