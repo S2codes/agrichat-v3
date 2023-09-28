@@ -23,7 +23,13 @@ const Communities = ({ navigation }) => {
       const userData = await getItem("authDetails")
       const USERID = userData.userid
 
-      const endpoint = `${JOINEDGROUPS}&user_id=${USERID}`;
+      let USER_SELECTED_LANGUAGE = 'English';
+      const getLanguage =  await getItem("language")
+      if (getLanguage != null) {
+        USER_SELECTED_LANGUAGE = getLanguage.language; 
+      }
+
+      const endpoint = `${JOINEDGROUPS}&user_id=${USERID}&lang=${USER_SELECTED_LANGUAGE}`;
       const Groups = await apiGet(endpoint)
       setGroupData(Groups)
 

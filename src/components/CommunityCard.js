@@ -5,8 +5,8 @@ import { RFValue } from "react-native-responsive-fontsize";
 const CommunityCard = (props) => {
 
     const navigation = useNavigation()
-    const item = props.data
-    
+    const item = props.data;
+
     const getCommunityBg = (groupcatg) => {
 
         switch (groupcatg) {
@@ -46,7 +46,7 @@ const CommunityCard = (props) => {
             case "New Technology":
                 return "#f1c330"
                 break;
-            default: 
+            default:
                 return "#fff"
                 break;
         }
@@ -55,9 +55,12 @@ const CommunityCard = (props) => {
 
     return (
         <TouchableOpacity
-            style={[styles.communityCardStyle,
-            { backgroundColor: getCommunityBg(item.groupCategory) }
-            ]} onPress={
+            style={
+                [styles.communityCardStyle,
+                { backgroundColor: getCommunityBg(item.defaultGroupCategory) }
+                ]
+            }
+            onPress={
                 () => {
                     navigation.navigate("Community", {
                         Communityname: item.groupName,

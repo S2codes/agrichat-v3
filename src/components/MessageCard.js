@@ -1,12 +1,35 @@
 import { Image, StyleSheet, Text, View, TouchableOpacity, Alert, Linking } from 'react-native'
 import React from 'react'
-import { AntDesign } from '@expo/vector-icons';
+import { AntDesign, FontAwesome, MaterialCommunityIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { RFValue } from "react-native-responsive-fontsize";
-const MessageCard = ({ sendView = false, userView = true, deleteBtn = false, data, onDelete }) => {
+import * as FileSystem from 'expo-file-system';
+import { shareAsync } from 'expo-sharing'
 
-    
-    const navigation = useNavigation()
+const MessageCard = ({ sendView = false, userView = true, deleteBtn = false, data, onDelete }) => {
+    const navigation = useNavigation();
+
+    const getfileName = (uri) => {
+        const currentDate = new Date();
+        const formattedDate = currentDate.toISOString().replace(/[-:.T]/g, '').substr(0, 14);
+        const urlParts = uri.split('.');
+        const fileType = urlParts[urlParts.length - 1];
+        const filename = formattedDate + '.' + fileType;
+        return filename
+    }
+
+    const handerShare = async (uri) => {
+        console.log("uri");
+        console.log(uri);
+        const filename = getfileName(uri);
+        const result = await FileSystem.downloadAsync(
+            uri,
+            FileSystem.documentDirectory + filename
+        )
+        shareAsync(result.uri)
+    }
+
+
 
     return (
         <View style={styles.cardContainer}>
@@ -67,24 +90,59 @@ const MessageCard = ({ sendView = false, userView = true, deleteBtn = false, dat
 
             {
                 data && data.attachment && data.attachment.type === "jpg" ? (
-                    <TouchableOpacity onPress={() => {
-                        navigation.navigate("View Image", {
-                            imageURL:  data.attachment.attachment
-                        })
-                    }}>
-                    <Image source={{ uri: data.attachment.attachment }} resizeMode='contain' style={styles.attachmentImage} />
-                    </TouchableOpacity>
+                    <View>
+                        <TouchableOpacity onPress={() => {
+                            navigation.navigate("View Image", {
+                                imageURL: data.attachment.attachment
+                            })
+                        }}>
+                            <Image source={{ uri: data.attachment.attachment }} resizeMode='contain' style={styles.attachmentImage} />
+                        </TouchableOpacity>
+
+                        <View style={styles.actionHandeler} >
+                            <View style={styles.actionItem} ></View>
+
+                            <TouchableOpacity style={styles.actionItem} onPress={() => {
+                                handerShare(attachment.attachment)
+                            }}>
+                                <FontAwesome name="share" size={30} color="#5D9C59" />
+                                <Text style={styles.actionText}>Share</Text>
+                            </TouchableOpacity>
+                        </View>
+
+                    </View>
                 ) : (null)
             }
 
             {
                 data && data.attachment && data.attachment.type === "pdf" ? (
-                    <TouchableOpacity style={styles.viewDocument} onPress={() => {
-                        Linking.openURL(data.attachment.attachment)
-                    }}>
-                        <AntDesign name="pdffile1" size={30} color="red" />
-                        <Text style={styles.attachmentLabel}>View Doucment</Text>
-                    </TouchableOpacity>
+                    <View>
+                        <TouchableOpacity style={styles.viewDocument} onPress={() => {
+                            navigation.navigate('View Pdf', { uri: data.attachment.attachment })
+                            // Linking.openURL(data.attachment.attachment)
+                        }}>
+                            <AntDesign name="pdffile1" size={30} color="red" />
+                            <Text style={styles.attachmentLabel}>View Doucment</Text>
+                        </TouchableOpacity>
+
+                        <View style={styles.actionHandeler} >
+                            <TouchableOpacity style={styles.actionItem} onPress={() => {
+                                Linking.openURL(data.attachment.attachment)
+                            }}>
+                                <MaterialCommunityIcons name="download" size={30} color="#5D9C59" />
+                                <Text style={styles.actionText} >Download pdf</Text>
+                            </TouchableOpacity>
+
+                            <TouchableOpacity style={styles.actionItem} onPress={() => {
+                                handerShare(data.attachment.attachment)
+                            }}>
+                                <FontAwesome name="share" size={30} color="#5D9C59" />
+                                <Text style={styles.actionText}>Share</Text>
+                            </TouchableOpacity>
+                        </View>
+
+                    </View>
+
                 ) : (null)
             }
 
@@ -94,28 +152,28 @@ const MessageCard = ({ sendView = false, userView = true, deleteBtn = false, dat
                     <View style={styles.cardFooter}>
 
                         <TouchableOpacity style={styles.cardDeleteCta} onPress={() => {
-                                 Alert.alert(
-                                    'Confirmation',
-                                    'Do you want to delete this question ?',
-                                    [
-                                        {
-                                            text: 'Cancel',
-                                            onPress: () => {},
-                                            style: 'cancel'
-                                        },
-                                        {
-                                            text: 'Yes',
-                                            onPress: () => {
-                                                onDelete(data.id)
-                                            }
-                                        },
-                                        // {
-                                        //     cancelable: true 
-                                        // }
-    
-                                    ]
-    
-                                )
+                            Alert.alert(
+                                'Confirmation',
+                                'Do you want to delete this question ?',
+                                [
+                                    {
+                                        text: 'Cancel',
+                                        onPress: () => { },
+                                        style: 'cancel'
+                                    },
+                                    {
+                                        text: 'Yes',
+                                        onPress: () => {
+                                            onDelete(data.id)
+                                        }
+                                    },
+                                    // {
+                                    //     cancelable: true 
+                                    // }
+
+                                ]
+
+                            )
 
                         }}>
                             <Text style={styles.cardDeleteCtaText}>Delete</Text>
@@ -256,7 +314,26 @@ const styles = StyleSheet.create({
     cardDeleteCtaText: {
         color: "#fff",
         textAlign: "center"
+    },
+    actionHandeler: {
+        marginTop: 10,
+        display: "flex",
+        alignItems: "center",
+        flexDirection: "row",
+        justifyContent: "space-between"
+    },
+    actionItem: {
+        display: "flex",
+        alignItems: "center",
+        flexDirection: "row",
+        paddingHorizontal: 3
+    },
+    actionText: {
+        color: "#504A4B",
+        fontSize: 13,
+        marginStart: 5
     }
+
 
 
 })

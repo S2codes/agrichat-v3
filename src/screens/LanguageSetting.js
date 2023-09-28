@@ -3,23 +3,51 @@ import React from 'react'
 import CheckConnection from '../Utils/CheckConnection';
 import { useState } from 'react';
 import { useEffect } from 'react';
-import { apiGet } from "../Utils/Utils";
+import { apiGet, getItem, setItem } from "../Utils/Utils";
 import { FETCHLANGUAGES } from '../config/urls';
 import { ScrollView } from 'react-native';
+import { showSuccess } from '../Utils/HelpFunctions';
 
-const LanguageSetting = () => {
+const LanguageSetting = ({ navigation }) => {
 
-    const [isLoading, setIsLoading] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
     const [isConnected, setIsConnected] = useState(true);
-    const [languageData, setLanguageData] = useState([])
-    const [selectedLang, setSelectedLang] = useState('English');
+    // const [languageData, setLanguageData] = useState([])
+    const [selectedLang, setSelectedLang] = useState('');
+
+    const languageData = [
+        { "name": "English", "nativeLanguage": "English" },
+        { "name": "Hindi", "nativeLanguage": "हिन्दी" },
+        { "name": "Assamese", "nativeLanguage": "অসমীয়া" },
+        { "name": "Bengali", "nativeLanguage": "বাংলা" },
+        { "name": "Gujarati", "nativeLanguage": "ગુજરાતી" },
+        { "name": "Kannada", "nativeLanguage": "ಕನ್ನಡ" },
+        { "name": "Khasi", "nativeLanguage": "Ka Ktien" },
+        { "name": "Konkani", "nativeLanguage": "कोंकणी" },
+        { "name": "Konyak", "nativeLanguage": "Konyak Naga" },
+        { "name": "Lushai", "nativeLanguage": "Mizo ṭawng" },
+        { "name": "Malayalam", "nativeLanguage": "മലയാളം" },
+        { "name": "Manipuri", "nativeLanguage": "মণিপুরী" },
+        { "name": "Marathi", "nativeLanguage": "मराठी" },
+        { "name": "Nepali", "nativeLanguage": "नेपाली" },
+        { "name": "Nissi", "nativeLanguage": "Nisi" },
+        { "name": "Odia", "nativeLanguage": "ଓଡ଼ିଆ" },
+        { "name": "Punjabi", "nativeLanguage": "ਪੰਜਾਬੀ" },
+        { "name": "Shimla", "nativeLanguage": "Shimil" },
+        { "name": "Tamil", "nativeLanguage": "தமிழ்" },
+        { "name": "Telugu", "nativeLanguage": "తెలుగు" }
+    ]
+
+
 
     useEffect(() => {
         const fetchLanguages = async () => {
             try {
-                const response = await apiGet(FETCHLANGUAGES);
-                console.log(response.data);
-                setLanguageData(response.data);
+                const response = await getItem('language')
+                if (response != null) {   
+                    const storeLanguage = response.language;
+                    setSelectedLang(storeLanguage);
+                }
                 setIsLoading(true);
             } catch (error) {
                 console.log(error);
@@ -30,10 +58,11 @@ const LanguageSetting = () => {
 
     }, [])
 
-    const onlanguagechange = async () =>{
-        alert("Language is Changed")
+    const onlanguagechange = async (languageItem) => {
+        await setItem("language", { language: languageItem })
+        showSuccess("Language is Changed");
+        navigation.navigate("Index");
     }
-
 
 
     return (
@@ -49,26 +78,22 @@ const LanguageSetting = () => {
 
                     <View style={styles.container}>
 
-                        <TouchableOpacity style={[styles.langaageItem, selectedLang === 'English' && styles.selectedItem]}
-                            onPress={() => {
-                                setSelectedLang('English')
-                                onlanguagechange()
-                            }}
-                        >
-                            <Text style={[styles.lanuageText, selectedLang === 'English' && styles.selectedLanuageText]} >English</Text>
-                        </TouchableOpacity>
-
                         {
-
                             languageData && languageData.map((item, index) => (
-                                <TouchableOpacity key={`${index}_${item}`}
-                                    style={[styles.langaageItem, selectedLang === item && styles.selectedItem]}
+                                <TouchableOpacity key={`${index}_`}
+                                    style={[
+                                        styles.langaageItem,
+                                        selectedLang === item.name ? styles.selectedItem : null
+                                    ]}
                                     onPress={() => {
-                                        setSelectedLang(item)
-                                        onlanguagechange()
+                                        setSelectedLang(item.name)
+                                        onlanguagechange(item.name)
                                     }}
                                 >
-                                    <Text style={[styles.lanuageText, selectedLang === item && styles.selectedLanuageText]} >{item}</Text>
+                                    <Text style={[
+                                        styles.lanuageText,
+                                        selectedLang === item.name ? styles.selectedLanuageText : null
+                                    ]} >{item.nativeLanguage} </Text>
                                 </TouchableOpacity>
                             ))
 
@@ -100,9 +125,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "space-around",
         flexWrap: "wrap",
-        paddingBottom: 12,
-        borderColor: "red",
-        borderWidth: 1
+        paddingBottom: 12
     },
     Maincontainer: {
         height: "100%",

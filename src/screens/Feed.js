@@ -18,11 +18,18 @@ const Feed = ({ navigation }) => {
 
   const getQuestion = async (usereid) => {
     try {
-      const res = await apiGet(`${GETQUESTIONBYUSERID}&userid=${usereid}`)
+
+      let USER_SELECTED_LANGUAGE = 'English';
+      const getLanguage = await getItem("language")
+      if (getLanguage != null) {
+        USER_SELECTED_LANGUAGE = getLanguage.language;
+      }
+      console.log(usereid);
+      const res = await apiGet(`${GETQUESTIONBYUSERID}&userid=${usereid}&lang=${USER_SELECTED_LANGUAGE}`)
       setAllQuestion(res.data);
     } catch (error) {
       showError("Internal Server Error")
-      
+
     }
   }
 
@@ -77,26 +84,26 @@ const Feed = ({ navigation }) => {
 
 
   return (
-<>
-    <CheckConnection isConnected={isConnected} setIsConnected={setIsConnected} />
-    
-    <SafeAreaView style={ isConnected?{flex: 1}: {display: 'none'}}>
-      {
-        isLoading ? (null) : (
-          <ActivityIndicator size="large" style={styles.ActivityIndicatorLoading} />
-        )
-      }
+    <>
+      <CheckConnection isConnected={isConnected} setIsConnected={setIsConnected} />
+
+      <SafeAreaView style={isConnected ? { flex: 1 } : { display: 'none' }}>
+        {
+          isLoading ? (null) : (
+            <ActivityIndicator size="large" style={styles.ActivityIndicatorLoading} />
+          )
+        }
 
 
-      <ScrollView style={styles.conatiner}>
+        <ScrollView style={styles.conatiner}>
 
-        <View >
-          {fetchQueries()}
-        </View>
+          <View >
+            {fetchQueries()}
+          </View>
 
-      </ScrollView>
+        </ScrollView>
 
-    </SafeAreaView>
+      </SafeAreaView>
     </>
   )
 

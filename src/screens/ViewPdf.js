@@ -3,8 +3,7 @@ import React, { useState } from 'react'
 import { WebView } from 'react-native-webview';
 
 const ViewPdf = ({ navigation, route }) => {
-    console.log(route);
-    console.log(route.params.uri);
+    
     const pdf_uri = route.params.uri;
     const screenWidth = Dimensions.get('screen').width;
     const screenHeight = Dimensions.get('screen').height;

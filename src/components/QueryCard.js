@@ -14,6 +14,7 @@ import * as Sharing from 'expo-sharing';
 
 const QueryCard = ({ community, communityName = "", communityCategory = "", showUserName = true, data, onDelete }) => {
 
+    const defaultGroupCategory =  data.defaultgroupCategory
     const attachment = JSON.parse(data.attachment)
     let isAttachmentPresent = false;
     if (attachment.type !== "none") {
@@ -90,15 +91,53 @@ const QueryCard = ({ community, communityName = "", communityCategory = "", show
         shareAsync(result.uri)
     }
 
-
-
     // save file in storage 
+    const getCommunityBg = (groupcatg) => {
+        switch (groupcatg) {
+            case "Agriculture":
+                return "#00ff01"
+                break;
+            case "Fisheries":
+                return "#6d9eeb"
+                break;
+            case "Horticulture":
+                return "#93c37e"
+                break;
+            case "Implement/ Machines":
+                return "#f1f2f6"
+                break;
+            case "Irrigation":
+                return "#3c78d8"
+                break;
+            case "Veterinary":
+                return "#00ffff"
+                break;
+            case "Soil Conservation":
+                return "#e06665"
+                break;
+            case "Fertilizer":
+                return "#efefef"
+                break;
+            case "Pesticides":
+                return "#efefef"
+                break;
+            case "Plantation Crop":
+                return "#f9ca9c"
+                break;
+            case "Decorative":
+                return "#fbe5cd"
+                break;
+            case "New Technology":
+                return "#f1c330"
+                break;
+            default: 
+                return "#5D9C59"
+                break;
+        }
 
+    }
 
-
-    let communityBg = "#5D9C59"
-
-    const navigation = useNavigation()
+    const navigation = useNavigation();
 
     return (
         <View style={styles.cardBody}>
@@ -106,9 +145,10 @@ const QueryCard = ({ community, communityName = "", communityCategory = "", show
             {
                 community ? (
                     <View
-                        style={[
+                        style={
+                            [
                             styles.CommunitiySec,
-                            { backgroundColor: communityBg }
+                            { backgroundColor: getCommunityBg(defaultGroupCategory) }
                         ]
                         }>
                         <Text style={styles.CommunitiyPara}>{communityCategory} / {communityName}</Text>
@@ -149,12 +189,13 @@ const QueryCard = ({ community, communityName = "", communityCategory = "", show
                             </TouchableOpacity>
 
                             <View style={styles.actionHandeler} >
-                                <TouchableOpacity style={styles.actionItem} onPress={() => {
+                                <View style={styles.actionItem} ></View>
+                                {/* <TouchableOpacity style={styles.actionItem} onPress={() => {
                                     handelImgDownload(attachment.attachment)
                                 }}>
                                     <MaterialCommunityIcons name="download" size={30} color="#5D9C59" />
                                     <Text style={styles.actionText} >Download img</Text>
-                                </TouchableOpacity>
+                                </TouchableOpacity> */}
 
                                 <TouchableOpacity style={styles.actionItem} onPress={() => {
                                     handerShare(attachment.attachment)
