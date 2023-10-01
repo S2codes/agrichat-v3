@@ -19,8 +19,6 @@ const MessageCard = ({ sendView = false, userView = true, deleteBtn = false, dat
     }
 
     const handerShare = async (uri) => {
-        console.log("uri");
-        console.log(uri);
         const filename = getfileName(uri);
         const result = await FileSystem.downloadAsync(
             uri,

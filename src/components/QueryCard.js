@@ -406,6 +406,7 @@ const styles = StyleSheet.create({
     },
     attachmentImage: {
         width: "100%",
+        minHeight: 100,
         flex: 1,
         aspectRatio: 1,
         marginTop: 7,

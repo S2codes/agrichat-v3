@@ -129,7 +129,6 @@ const WriteMessage = ({ navigation, route }) => {
 
         } catch (error) {
             console.log("error: ++");
-            console.log(result);
             console.log(error);
             return
         }

@@ -23,9 +23,16 @@ const GroupSetting = ({ navigation }) => {
     const [isNoData, setIsNoData] = useState(false)
 
     const fetchData = async (userid) => {
-        console.log("user id in fetch data : ", userid);
         try {
-            const response = await apiGet(`${SAVEDGROUPS}&userid=${userid}&page=${page}`)
+
+            let USER_SELECTED_LANGUAGE = 'English';
+            const getLanguage = await getItem("language")
+            if (getLanguage != null) {
+                USER_SELECTED_LANGUAGE = getLanguage.language;
+            }
+            console.log(USER_SELECTED_LANGUAGE);
+
+            const response = await apiGet(`${SAVEDGROUPS}&userid=${userid}&page=${page}&lang=${USER_SELECTED_LANGUAGE}`)
             setIsLoading(false)
             if (response.response) {
                 setResponseData([...responseData, ...response.data])
@@ -52,7 +59,7 @@ const GroupSetting = ({ navigation }) => {
                 setIsFetching(true)
                 const userData = await getItem("authDetails")
                 const USERID = userData.userid
-                
+
                 setUserId(USERID)
                 const endpoint = `${JOINEDGROUPS}&user_id=${USERID}`;
                 const JoinedGroups = await apiGet(endpoint)
@@ -66,7 +73,7 @@ const GroupSetting = ({ navigation }) => {
             }
         }
         fetchPreData()
-        
+
 
     }, [])
 
@@ -193,7 +200,7 @@ const GroupSetting = ({ navigation }) => {
                         responseData && responseData.map((item) =>
                             <View key={item.groupCategory}>
                                 <View style={[styles.categoryRibbon, { backgroundColor: getCommunityBg(item.groupCategory) }]}>
-                                    <Text style={styles.ribbonText}>{item.groupCategory}</Text>
+                                    <Text style={styles.ribbonText}>{item.groupCategoryLang}</Text>
                                 </View>
 
                                 {
@@ -202,7 +209,8 @@ const GroupSetting = ({ navigation }) => {
                                         <GroupItem
                                             key={`${item.groupCategory}-${group.groupId}`}
                                             groupid={group.groupId}
-                                            groupname={group.groupName}
+                                            // groupname={group.groupName}
+                                            groupname={group.groupNameLanguage}
                                             isSelected={group.selected}
                                             isPinned={group.pinned}
                                             onSelect={() => onSelect(group.groupId)}

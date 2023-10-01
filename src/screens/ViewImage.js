@@ -19,12 +19,12 @@ const ViewImage = ({ navigation, route }) => {
 
         try {
             const perm = await MediaLibrary.requestPermissionsAsync(true);
-            console.log(perm);
+            
             if (perm.status !== 'granted') {
                 console.log("not granted");
                 return;
             } else {
-                console.log("granted");
+                
                 const downloadResumable = FileSystem.createDownloadResumable(
                     imgUri,
                     FileSystem.documentDirectory + '21agrichat.jpg'
@@ -34,13 +34,13 @@ const ViewImage = ({ navigation, route }) => {
                 const assest = await MediaLibrary.createAssetAsync(uri)
 
                 const album = await MediaLibrary.getAlbumAsync('Agrichat')
-                console.log(album);
+                
                 if (album == null) {
                     await MediaLibrary.createAlbumAsync('Agrichat', assest, false)
-                    console.log("folder not found");
+                    
                 } else {
                     await MediaLibrary.addAssetsToAlbumAsync([assest], album, false)
-                    console.log("folder not found");
+                    
                 }
 
                 alert("Image is downloded")

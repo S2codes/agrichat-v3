@@ -24,7 +24,6 @@ const Feed = ({ navigation }) => {
       if (getLanguage != null) {
         USER_SELECTED_LANGUAGE = getLanguage.language;
       }
-      console.log(usereid);
       const res = await apiGet(`${GETQUESTIONBYUSERID}&userid=${usereid}&lang=${USER_SELECTED_LANGUAGE}`)
       setAllQuestion(res.data);
     } catch (error) {

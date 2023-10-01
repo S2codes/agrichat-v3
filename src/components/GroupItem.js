@@ -29,7 +29,7 @@ const GroupItem = ({ groupid, groupname, onSelect, onFavorite, isSelected = 0, i
     return (
 
         <View style={styles.groupContainer}>
-            <Text style={styles.groupName}>{groupname} - {groupid} </Text>
+            <Text style={styles.groupName}>{groupname}</Text>
             <View style={styles.groupItem}>
                 <Checkbox value={isChecked} onValueChange={() => {
                     setIsChecked(!isChecked)
@@ -38,7 +38,6 @@ const GroupItem = ({ groupid, groupname, onSelect, onFavorite, isSelected = 0, i
 
                 <TouchableOpacity
                     onPress={() => {
-                        
                         setIsFavorite(!isFavorite)
                         onFavorite()
                     }}
