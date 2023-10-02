@@ -4,7 +4,7 @@ import Swiper from 'react-native-swiper'
 
 
 const ImgSlider = ({ data }) => {
-
+    
     return (
         <View style={styles.container}>
             {

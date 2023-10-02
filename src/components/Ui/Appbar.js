@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, View, Share } from 'react-native'
 import React, { useState } from 'react'
 import { AppBar, HStack, IconButton } from "@react-native-material/core";
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
@@ -15,6 +15,30 @@ const Appbar = () => {
     const hideMenu = () => setVisible(false);
 
     const showMenu = () => setVisible(true);
+
+    const handerShare = async () => {
+        const Appuri ='https://play.google.com/store/apps/details?id=in.jyoss.agrichat&pli=1';
+        try {
+            const result = await Share.share({
+              message:
+                ('AgriChat | Help each other - Grow Together'+ '\n'+ Appuri )
+            });
+            if (result.action === Share.sharedAction) {
+              if (result.activityType) {
+                // console.log(result.activityType);
+                // shared with activity type of result.activityType
+              } else {
+                // shared
+                // console.log("shared...");
+            }
+        } else if (result.action === Share.dismissedAction) {
+                console.log("desmissed");
+              // dismissed
+            }
+          } catch (error) {
+            alert(error.message);
+          }
+    }
 
 
     return (
@@ -49,7 +73,8 @@ const Appbar = () => {
                         >
                             <MenuItem onPress={() => {
                                 hideMenu
-                                navigation.navigate("Profile")
+                                // navigation.navigate("Profile")
+                                handerShare()
                             }}>
                                 <Text style={styles.menuItem}>Share this App</Text>
                             </MenuItem>
