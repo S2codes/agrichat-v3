@@ -63,16 +63,16 @@ const CommunityCard = (props) => {
             onPress={
                 () => {
                     navigation.navigate("Community", {
-                        Communityname: item.groupName,
-                        Communitycategory: item.groupCategory,
+                        Communityname: item.groupName != '' ? item.groupName : item.defaultGroup,
+                        Communitycategory: item.groupCategory != '' ? item.groupCategory : item.defaultGroupCategory,
                         GroupId: item.id,
                         type: "chat"
                     })
                 }
             }>
             <View >
-                <Text style={styles.title}>{item.groupCategory}</Text>
-                <Text style={styles.GroupName}>{item.groupName}</Text>
+                <Text style={styles.title}>{item.groupCategory != '' ? item.groupCategory : item.defaultGroupCategory}</Text>
+                <Text style={styles.GroupName}>{item.groupName != '' ? item.groupName : item.defaultGroup}</Text>
             </View>
         </TouchableOpacity>
     )

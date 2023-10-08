@@ -45,7 +45,7 @@ const Appbar = () => {
         <AppBar title="AgriChat"
             color='#5D9C59'
             tintColor='#fff'
-            style={{ paddingTop: 10, marginTop: 5 }}
+            style={{ paddingTop: 10 }}
 
             trailing={props => (
 

@@ -14,13 +14,12 @@ import * as Sharing from 'expo-sharing';
 
 const QueryCard = ({ community, communityName = "", communityCategory = "", showUserName = true, data, onDelete }) => {
 
-    const defaultGroupCategory =  data.defaultgroupCategory
+    const defaultGroupCategory = data.defaultgroupCategory
     const attachment = JSON.parse(data.attachment)
     let isAttachmentPresent = false;
     if (attachment.type !== "none") {
         isAttachmentPresent = true
     }
-
 
     const [user, setUser] = useState()
 
@@ -130,7 +129,7 @@ const QueryCard = ({ community, communityName = "", communityCategory = "", show
             case "New Technology":
                 return "#f1c330"
                 break;
-            default: 
+            default:
                 return "#5D9C59"
                 break;
         }
@@ -147,12 +146,12 @@ const QueryCard = ({ community, communityName = "", communityCategory = "", show
                     <View
                         style={
                             [
-                            styles.CommunitiySec,
-                            { backgroundColor: getCommunityBg(defaultGroupCategory) }
-                        ]
+                                styles.CommunitiySec,
+                                { backgroundColor: getCommunityBg(defaultGroupCategory) }
+                            ]
                         }>
-                        <Text style={styles.CommunitiyPara}>{communityCategory} / {communityName}</Text>
-
+                        <Text style={styles.CommunitiyPara}>{communityCategory != '' ? communityCategory : data.defaultgroupCategory} / {data.groupname != '' ? communityName : data.defaultGroup}</Text>
+                        
                     </View>
                 ) : (
                     ""
@@ -350,7 +349,7 @@ const styles = StyleSheet.create({
         paddingVertical: 3
     },
     CommunitiyPara: {
-        color: "#fff",
+        color: "#000",
         marginLeft: 7,
         fontSize: RFValue(18),
         textTransform: "capitalize",

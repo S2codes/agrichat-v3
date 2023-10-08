@@ -284,13 +284,15 @@ const styles = StyleSheet.create({
         alignSelf: "center"
     },
     categoryRibbon: {
-        paddingVertical: 4,
+        paddingVertical: 7,
         paddingHorizontal: 8,
         marginTop: 8
     },
     ribbonText: {
         fontSize: RFValue(16),
-        color: "#000"
+        color: "#000",
+        textAlign: "center",
+        fontWeight: 600
     },
     gap: {
         height: 40,
